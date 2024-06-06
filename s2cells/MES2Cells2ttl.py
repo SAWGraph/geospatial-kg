@@ -1,12 +1,21 @@
-"""Create a single .ttl file from .zip file containing one .ttl file for each S2 cell
+"""Create a .ttl file from a .zip file containing one .ttl file for each S2 cell
 
-Define the name (and path) of the input .zip file under ### Input Filename ###
-Define the name (and path) of the output .ttl file under ### Output Filename ###
-Call the process_zipped_ttl_files function once for each input .zip file
+Under ### Input Filenames ###, define
+    the name (and path) of the input .zip file
+Under ### Output Filename ###, define
+    the name (and path) of the output .ttl file
+
+Required:
+    * zipfile
+    * rdflib (Graph)
+
+Functions:
+    * process_zipped_ttl_files - adds the .zip file of .ttl files to an RDFLib knowledge graph
 """
 
+import datetime
+import time
 import zipfile
-
 from rdflib import Graph
 
 ### Input Filenames ###
@@ -38,9 +47,8 @@ def process_zipped_ttl_files(infile, graph):
 
 
 if __name__ == "__main__":
-    # Create an empty knowledge graph
+    start_time = time.time()
     kg = Graph()
-    # Call the process_zipped_ttl_files function to add data to the knowledge graph
     kg = process_zipped_ttl_files(input_s2_cells, kg)
-    # Write the resulting knowledge graph to a .ttl file
     kg.serialize(output_file, format='ttl')
+    print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
