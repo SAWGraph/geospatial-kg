@@ -5,8 +5,9 @@ Define the name (and path) of the output .ttl file under ### Output Filename ###
 Call the process_zipped_ttl_files function once for each input .zip file
 """
 
+import datetime
+import time
 import zipfile
-
 from rdflib import Graph
 
 ### Input Filenames ###
@@ -26,12 +27,9 @@ output_file = 'me_admin-regions_kwg.ttl'
 def process_zipped_ttl_files(infile, graph):
     """Parse all .ttl files in a .zip file to a RDFLib graph.
 
-    This function takes two inputs:
-        the name of a .zip file that contains .ttl files and
-        an RDFLIB graph.
-    The function reads each .ttl file in the .zip file and
-        parses the content to the RDFLib graph.
-    The RDFLIB graph is returned.
+    :param infile: the name of a .zip file that contains .ttl files
+    :param graph: an RDFLIB graph
+    :return: an RDFLIB graph
     """
     with zipfile.ZipFile(infile) as myzip:
         file_list = myzip.namelist()
@@ -43,6 +41,7 @@ def process_zipped_ttl_files(infile, graph):
 
 
 if __name__ == "__main__":
+    start_time = time.time()
     # Create an empty knowledge graph
     kg = Graph()
     # Call the process_zipped_ttl_files function to add data to the knowledge graph
@@ -51,3 +50,4 @@ if __name__ == "__main__":
     kg = process_zipped_ttl_files(input_state_s2, kg)
     # Write the resulting knowledge graph to a .ttl file
     kg.serialize(output_file, format='ttl')
+    print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')

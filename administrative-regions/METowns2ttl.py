@@ -23,10 +23,10 @@ Functions:
 
 import geopandas as gpd
 from shapely import LineString, Point, Polygon
-
+import datetime
+import time
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, XSD
-
 from variable import prefixes
 
 ### Input Filenames ###
@@ -40,6 +40,8 @@ s2_file = 's2l13_23/s2l13_23.shp'
 # This is for the resulting .ttl file
 ttl_file = 'me_towns.ttl'
 
+
+### Functions ###
 
 def initial_kg(prefixdict):
     """Create an empty knowledge graph with project namespaces
@@ -137,5 +139,7 @@ def main():
 
 
 if __name__ == "__main__":
+    start_time = time.time()
     kg = main()
     kg.serialize(ttl_file, format='turtle')
+    print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
