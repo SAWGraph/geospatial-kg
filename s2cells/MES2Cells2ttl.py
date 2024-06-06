@@ -1,6 +1,6 @@
 """Create a .ttl file from a .zip file containing one .ttl file for each S2 cell
 
-Under ### Input Filenames ###, define
+Under ### Input Filename ###, define
     the name (and path) of the input .zip file
 Under ### Output Filename ###, define
     the name (and path) of the output .ttl file
@@ -18,7 +18,7 @@ import time
 import zipfile
 from rdflib import Graph
 
-### Input Filenames ###
+### Input Filename ###
 # These files come from KnowWhereGraph
 # They include state and county admin regions, county S2 cell relations, and state S2 cell relations.
 input_s2_cells = 'maine_s2_level-13.zip'
