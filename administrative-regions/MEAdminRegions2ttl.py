@@ -1,8 +1,16 @@
 """Create a single .ttl file from a set of .zip files containing .ttl files
 
-Define the names (and paths) of the input .zip files under ### Input Filenames ###
-Define the name (and path) of the output .ttl file under ### Output Filename ###
-Call the process_zipped_ttl_files function once for each input .zip file
+Under ### Input Filenames ###, define
+    the name (and path) of each input .zip file
+Under ### Output Filename ###, define
+    the name (and path) of the output .ttl file
+
+Required:
+    * zipfile
+    * rdflib (Graph)
+
+Functions:
+    * process_zipped_ttl_files - adds the .zip file of .ttl files to an RDFLib knowledge graph
 """
 
 import datetime

@@ -8,11 +8,11 @@ Under ### Output Filename ###, define
     the name (and path) of the output .ttl file
 
 Required:
-    geopandas
-    shapely (Linestring, Point, and Polygon)
-    rdflib (Graph and Literal)
-    rdflib.namespace (GEO, RDF, RDFS, and XSD)
-    variable (a local .py file with a dictionary of project namespaces)
+    * geopandas
+    * shapely (Linestring, Point, and Polygon)
+    * rdflib (Graph and Literal)
+    * rdflib.namespace (GEO, RDF, RDFS, and XSD)
+    * variable (a local .py file with a dictionary of project namespaces)
 
 Functions:
     * initial_kg - initialize an RDFLib knowledge graph with project namespaces
