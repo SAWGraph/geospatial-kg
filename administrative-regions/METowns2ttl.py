@@ -27,7 +27,7 @@ import datetime
 import time
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, XSD
-from variable import prefixes
+from sawgrapgh_namespaces import _PREFIX
 
 ### Input Filenames ###
 # The towns file should be a .shp file from the US Census Bureau
@@ -43,15 +43,15 @@ ttl_file = 'me_towns.ttl'
 
 ### Functions ###
 
-def initial_kg(prefixdict):
+def initial_kg(_PREFIX):
     """Create an empty knowledge graph with project namespaces
 
-    :param prefixdict: a dictionary of project namespaces
+    :param _PREFIX: a dictionary of project namespaces
     :return: an RDFLib graph
     """
     graph = Graph()
-    for prefix in prefixdict:
-        graph.bind(prefix, prefixdict[prefix])
+    for prefix in _PREFIX:
+        graph.bind(prefix, _PREFIX[prefix])
     return graph
 
 
@@ -61,9 +61,9 @@ def build_iris(gid):
     :param gid: The 10-digit FIPS code for the town is expected as iinput (GEOID)
     :return: a tuple with the three IRIs
     """
-    return (prefixes["dcgeoid"][gid],
-            prefixes["sawgeo"]['d.Polygon.administrativeRegion.USA.' + gid],
-            prefixes["sawgeo"]['d.Point.administrativeRegion.USA.' + gid])
+    return (_PREFIX["dcgeoid"][gid],
+            _PREFIX["sawgeo"]['d.Polygon.administrativeRegion.USA.' + gid],
+            _PREFIX["sawgeo"]['d.Point.administrativeRegion.USA.' + gid])
 
 
 def find_s2_intersects_geom(geom, s2cells):
@@ -98,20 +98,20 @@ def main():
     """
     gdf_towns = gpd.read_file(towns_file)
     gdf_s2l13 = gpd.read_file(s2_file)
-    graph = initial_kg(prefixes)
+    graph = initial_kg(_PREFIX)
     count = 1
     n = len(gdf_towns.index)
     for row in gdf_towns.itertuples():
         name = row.NAMELSAD + ", Maine"
         towniri, polyiri, pntiri = build_iris(row.GEOID)
 
-        graph.add((towniri, RDF.type, prefixes["kwg-ont"]['AdministrativeRegion_3']))
+        graph.add((towniri, RDF.type, _PREFIX["kwg-ont"]['AdministrativeRegion_3']))
         graph.add((towniri, RDFS.label, Literal(name, datatype=XSD.string)))
-        graph.add((towniri, prefixes["kwg-ont"]['administrativePartOf'],
-                   prefixes["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
-        graph.add((towniri, prefixes["kwg-ont"]['hasFIPS'], Literal(row.GEOID, datatype=XSD.string)))
-        graph.add((towniri, prefixes["kwg-ont"]['sfWithin'],
-                   prefixes["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
+        graph.add((towniri, _PREFIX["kwg-ont"]['administrativePartOf'],
+                   _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
+        graph.add((towniri, _PREFIX["kwg-ont"]['hasFIPS'], Literal(row.GEOID, datatype=XSD.string)))
+        graph.add((towniri, _PREFIX["kwg-ont"]['sfWithin'],
+                   _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
         graph.add((towniri, GEO.hasGeometry, polyiri))
         graph.add((towniri, GEO.hasGeometry, pntiri))
         graph.add((towniri, GEO['hasDefaultGeometry'], polyiri))
@@ -128,9 +128,9 @@ def main():
         s2within, s2overlaps = find_s2_intersects_geom(row.geometry, gdf_s2l13)
 
         for s2 in s2within:
-            graph.add((prefixes["kwgr"]['s2.level13.' + s2], prefixes["kwg-ont"]['sfWithin'], towniri))
+            graph.add((_PREFIX["kwgr"]['s2.level13.' + s2], _PREFIX["kwg-ont"]['sfWithin'], towniri))
         for s2 in s2overlaps:
-            graph.add((prefixes["kwgr"]['s2.level13.' + s2], prefixes["kwg-ont"]['sfOverlaps'], towniri))
+            graph.add((_PREFIX["kwgr"]['s2.level13.' + s2], _PREFIX["kwg-ont"]['sfOverlaps'], towniri))
 
         print(f'Row {count:3} of {n} : {name:50}', end='\r', flush=True)
         count += 1
