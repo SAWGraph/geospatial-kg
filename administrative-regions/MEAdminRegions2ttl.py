@@ -1,8 +1,8 @@
 """Create a single .ttl file from a set of .zip files containing .ttl files
 
-Under ### Input Filenames ###, define
+Under ### INPUT Filenames ###, define
     the name (and path) of each input .zip file
-Under ### Output Filename ###, define
+Under ### OUTPUT Filename ###, define
     the name (and path) of the output .ttl file
 
 Required:
@@ -13,20 +13,22 @@ Functions:
     * process_zipped_ttl_files - adds the .zip file of .ttl files to an RDFLib knowledge graph
 """
 
-import datetime
-import time
 import zipfile
 from rdflib import Graph
 
-### Input Filenames ###
-# These files come from KnowWhereGraph
-# They include state and county admin regions, county S2 cell relations, and state S2 cell relations.
+import time
+import datetime
+
+### INPUT Filenames ###
+# input_admin_regions: a zip file of KnowWhereGraph administrative regions
+# input_counties_s2: a zip file of S2L13 connections to counties
+# input_state_s2: a zip file of S2L13 connections to the state
 input_admin_regions = 'maine-admin-regions.zip'
 input_counties_s2 = 'maine_counties_s2.zip'
 input_state_s2 = 'maine_state_s2.zip'
 
-### Output Filename ###
-# This is for the resulting .ttl file
+### OUTPUT Filename ###
+# output_file: this is for the resulting .ttl file
 output_file = 'me_admin-regions_kwg.ttl'
 
 

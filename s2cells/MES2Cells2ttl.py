@@ -1,8 +1,8 @@
 """Create a .ttl file from a .zip file containing one .ttl file for each S2 cell
 
-Under ### Input Filename ###, define
+Under ### INPUT Filename ###, define
     the name (and path) of the input .zip file
-Under ### Output Filename ###, define
+Under ### OUTPUT Filename ###, define
     the name (and path) of the output .ttl file
 
 Required:
@@ -13,22 +13,21 @@ Functions:
     * process_zipped_ttl_files - adds the .zip file of .ttl files to an RDFLib knowledge graph
 """
 
-import datetime
-import time
 import zipfile
 from rdflib import Graph
 
-### Input Filename ###
-# These files come from KnowWhereGraph
-# They include state and county admin regions, county S2 cell relations, and state S2 cell relations.
+import time
+import datetime
+
+### INPUT Filename ###
+# input_s2_cells: The S2L13 cells from KnowWhereGraph for Maine
+#    They include state and county admin regions, county S2 cell relations, and state S2 cell relations.
 input_s2_cells = 'maine_s2_level-13.zip'
 
-### Output Filename ###
-# This is for the resulting .ttl file
+### OUTPUT Filename ###
+# output_file: This is for the resulting .ttl file
 output_file = 'me_s2-l13.ttl'
 
-
-### Functions ###
 
 def process_zipped_ttl_files(infile, graph):
     """Parse all .ttl files in a .zip file to a RDFLib graph.

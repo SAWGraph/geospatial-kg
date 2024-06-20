@@ -9,7 +9,7 @@ Under ### Output Filename ###, define
 
 Required:
     * geopandas
-    * shapely (Linestring, Point, and Polygon)
+    * shapely (LineString, Point, and Polygon)
     * rdflib (Graph and Literal)
     * rdflib.namespace (GEO, RDF, RDFS, and XSD)
     * variable (a local .py file with a dictionary of project namespaces)
@@ -23,25 +23,33 @@ Functions:
 
 import geopandas as gpd
 from shapely import LineString, Point, Polygon
-import datetime
-import time
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, XSD
-from sawgrapgh_namespaces import _PREFIX
+
+import time
+import datetime
+
+import sys
+import os
+
+# Modify the system path to find variable.py
+sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
+from variable import _PREFIX, find_s2_intersects_geom
+
+# Set the current directory to this file's directory
+os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Administrative Regions')
 
 ### Input Filenames ###
-# The towns file should be a .shp file from the US Census Bureau
+# towns_file: a county subdivisions .shp file from the US Census Bureau
 #    County subdivision shapefiles: https://www.census.gov/cgi-bin/geo/shapefiles/index.php
-# The S2 cell file must be created separately and depends on the desired level
-towns_file = 'tl_2023_23_cousub/tl_2023_23_cousub.shp'
-s2_file = 's2l13_23/s2l13_23.shp'
+# s2_file: Level 13 S2 cells tat overlap/are within Maine
+towns_file = '../Geospatial/tl_2023_23_cousub/tl_2023_23_cousub.shp'
+s2_file = '../Geospatial/s2l13_23/s2l13_23.shp'
 
 ### Output Filename ###
-# This is for the resulting .ttl file
+# ttl_file: the resulting (output) .ttl file
 ttl_file = 'me_towns.ttl'
 
-
-### Functions ###
 
 def initial_kg(_PREFIX):
     """Create an empty knowledge graph with project namespaces
@@ -64,23 +72,6 @@ def build_iris(gid):
     return (_PREFIX["dcgeoid"][gid],
             _PREFIX["sawgeo"]['d.Polygon.administrativeRegion.USA.' + gid],
             _PREFIX["sawgeo"]['d.Point.administrativeRegion.USA.' + gid])
-
-
-def find_s2_intersects_geom(geom, s2cells):
-    """Return the S2 cells within a town and the S2 cells overlapping the town
-
-    :param geom: A polygon representing the boundary of a town
-    :param s2cells: A GeoDataFrame of S2 cells for the town's state
-    :return: A list of S2 cells within the town and a list of S2 cells overlapping the town
-    """
-    within = []
-    overlaps = []
-    for row in s2cells.itertuples():
-        if row.geometry.within(geom):
-            within.append(row.Name)
-        if row.geometry.overlaps(geom):
-            overlaps.append(row.Name)
-    return within, overlaps
 
 
 def main():
