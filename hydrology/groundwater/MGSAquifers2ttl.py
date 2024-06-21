@@ -290,7 +290,7 @@ def process_aquifers_shp2shp(infile, outfile, diag):
     :param diag: if True the called functions log more detailed info than when it is False
     :return: a dictionary
     """
-    logger.info('\n\nBEGIN PROCESSING THE AQUIFERS SHAPEFILE')
+    logger.info('BEGIN PROCESSING THE AQUIFERS SHAPEFILE')
     gdf_initial = read_shp_2_gdf(infile, diag)
     gdf_filtered = filter_flow_rates(gdf_initial, flow_rates, diag)
     gdf_dissolve_1 = dissolve_on_attribute(gdf_filtered, dissolve_attr_1, diag)
@@ -361,7 +361,10 @@ def process_aquifers_shp2ttl(infile, s2file, outfile, ids_dict):
         kg.add((aquiferiri, RDFS.comment, Literal(comment, datatype=XSD.string)))
         kg.add((polyiri, GEO.asWKT, Literal(row.geometry, datatype=GEO.wktLiteral)))
         kg.add((polyiri, RDF.type, GEO.Geometry))
-        kg.add((polyiri, RDF.type, _PREFIX['sf']['MultiPolygon']))
+        if 'multipolygon' in str(row.geometry).lower():
+            kg.add((polyiri, RDF.type, _PREFIX['sf']['MultiPolygon']))
+        else:
+            kg.add((polyiri, RDF.type, _PREFIX['sf']['Polygon']))
 
         s2within, s2overlaps = find_s2_intersects_geom(row.geometry, gdf_s2l13)
         for s2 in s2within:
@@ -382,4 +385,4 @@ if __name__ == '__main__':
     ids = process_aquifers_shp2shp(mgs_aquifer_shp_path, mgs_aqs_shp_outfile, diagnostics)
     process_aquifers_shp2ttl(mgs_aqs_shp_outfile, s2_file, ttl_file, ids)
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
-    print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
+    print(f'\nRuntime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
