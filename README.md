@@ -1,4 +1,4 @@
-# geospatial
+# geospatial-kg
 
 ## S2 cells
 These are taken from KnowWhereGraph and are currently at level 13.
