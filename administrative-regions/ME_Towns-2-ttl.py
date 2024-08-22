@@ -79,8 +79,8 @@ def build_iris(gid):
     :return: a tuple with the three IRIs
     """
     return (_PREFIX["dcgeoid"][gid],
-            _PREFIX["sawgeo"]['d.Polygon.administrativeRegion.USA.' + gid],
-            _PREFIX["sawgeo"]['d.Point.administrativeRegion.USA.' + gid])
+            _PREFIX["saw_geo"]['d.Polygon.administrativeRegion.USA.' + gid],
+            _PREFIX["saw_geo"]['d.Point.administrativeRegion.USA.' + gid])
 
 
 def main():
@@ -97,7 +97,7 @@ def main():
     :return: a complete knowledge graph
     """
     gdf_towns = gpd.read_file(towns_file)
-    gdf_s2l13 = gpd.read_file(s2_file)
+    # gdf_s2l13 = gpd.read_file(s2_file)
     logger.info('Intializing the knowledge graph')
     graph = initial_kg(_PREFIX)
     count = 1
