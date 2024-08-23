@@ -1,0 +1,277 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sf: <http://www.opengis.net/ont/sf/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://sawgraph.spatialai.org/v1/s2l13-adminregions-ontology> rdf:type owl:Ontology ;
+                                                               dcterms:creator "Proto-OKN Theme 1: Safe Agricultural Products and Water Graph (SAWGraph): An OKN to Monitor and Trace PFAS and Other Contaminants in the Nation's Food and Water Systems"@en ;
+															   dcterms:contributor [ rdf:type schema:Person ;
+																				     schema:name "David Kedrowski" ;
+																				     schema:affiliation "University of Maine" ;
+																				     schema:email "david.kedrowski@maine.edu"^^xsd:string ;
+																				     schema:url "https://orcid.org/0000-0002-9070-3169"^^xsd:anyURI ;
+																				   ] ;
+                                                               dcterms:created "2024-08-14"^^xsd:date ;
+															   dcterms:issued "2024-08-14"^^xsd:date ;
+															   dcterms:modified "2024-08-19"^^xsd:date ;
+                                                               dcterms:publisher "Safe Agricultural Products and Water Graph (SAWGraph)"@en ;
+                                                               dcterms:description "This ontology supports SAWGraph"@en ;
+                                                               dcterms:title "The SAWGraph S2L13 & Administrative Region Ontology"@en ;
+															   dcterms:source "https://github.com/SAWGraph/geospatial-kg/tree/main/administrative-regions/s2l13-adminregions-ontology.ttl"^^xsd:anyURI ;
+															   owl:versionIRI <http://sawgraph.spatialai.org/v1/s2l13-adminregions-ontology> ;
+                                                               owl:versionInfo "1.0"@en .
+
+
+########################################################
+#    Annotation properties
+########################################################
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/contributor
+dcterms:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://schema.org/domainIncludes
+schema:domainIncludes rdf:type owl:AnnotationProperty .
+
+
+###  http://schema.org/rangeIncludes
+schema:rangeIncludes rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#description
+skos:description rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#editorialNote
+skos:editorialNote rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#example
+skos:example rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#note
+skos:note rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+#######################################################
+#    Datatypes
+#######################################################
+
+###  http://www.opengis.net/ont/geosparql#wktLiteral
+geo:wktLiteral rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#anyURI
+xsd:anyURI rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#float
+xsd:float rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#string
+xsd:string rdf:type rdfs:Datatype .
+
+
+#######################################################
+#    Object Properties
+#######################################################
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/administrativePartOf
+kwg-ont:administrativePartOf rdf:type owl:ObjectProperty .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/spatialRelation
+kwg-ont:spatialRelation rdf:type owl:ObjectProperty ;
+                        rdfs:label "(kwg) spatial relation" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfContains
+kwg-ont:sfContains rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                   owl:inverseOf kwg-ont:sfWithin ;
+                   rdfs:label "(kwg) sfContains" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfOverlaps
+kwg-ont:sfOverlaps rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                   rdf:type owl:SymmetricProperty ;
+                   rdfs:label "(kwg) sfOverlaps" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfTouches
+kwg-ont:sfTouches rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                  rdf:type owl:SymmetricProperty ;
+                  rdfs:label "(kwg) sfTouches" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfWithin
+kwg-ont:sfWithin rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                 rdfs:label "(kwg) sfWithin" .
+
+
+###  http://www.opengis.net/ont/geosparql#defaultGeometry
+geo:defaultGeometry rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf geo:hasGeometry .
+
+
+###  http://www.opengis.net/ont/geosparql#hasGeometry
+geo:hasGeometry rdf:type owl:ObjectProperty .
+
+
+#######################################################
+#    Data Properties
+#######################################################
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/cellID
+kwg-ont:cellID rdf:type owl:DatatypeProperty .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/hasFIPS
+kwg-ont:hasFIPS rdf:type owl:DatatypeProperty .
+
+
+###  http://www.opengis.net/ont/geosparql#asWKT
+geo:asWKT rdf:type owl:DatatypeProperty .
+
+
+###  http://www.opengis.net/ont/geosparql#hasMetricArea
+geo:hasMetricArea rdf:type owl:DatatypeProperty .
+
+
+#######################################################
+#    Classes
+#######################################################
+
+###  https://schema.org/Person
+schema:Person rdf:type owl:Class .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/Region
+kwg-ont:Region rdf:type owl:Class .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion
+kwg-ont:AdministrativeRegion rdf:type owl:Class ;
+                             rdfs:subClassOf kwg-ont:Region ,
+                                             geo:Feature .
+
+
+### http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1
+kwg-ont:AdministrativeRegion_1 rdf:type owl:Class ;
+							   rdfs:subClassOf kwg-ont:AdministrativeRegion .
+
+
+### http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2
+kwg-ont:AdministrativeRegion_2 rdf:type owl:Class ;
+							   rdfs:subClassOf kwg-ont:AdministrativeRegion .
+
+
+### http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_3
+kwg-ont:AdministrativeRegion_3 rdf:type owl:Class ;
+							   rdfs:subClassOf kwg-ont:AdministrativeRegion .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/Cell
+kwg-ont:Cell rdf:type owl:Class ;
+             rdfs:subClassOf geo:SpatialObject .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/S2Cell
+kwg-ont:S2Cell rdf:type owl:Class ;
+               rdfs:subClassOf kwg-ont:Cell ,
+                               geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/S2Cell_Level12
+kwg-ont:S2Cell_Level12 rdf:type owl:Class ;
+                       rdfs:subClassOf kwg-ont:S2Cell .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/S2Cell_Level13
+kwg-ont:S2Cell_Level13 rdf:type owl:Class ;
+                       rdfs:subClassOf kwg-ont:S2Cell .
+
+
+###  http://www.opengis.net/ont/geosparql#Feature
+geo:Feature rdf:type owl:Class ;
+            rdfs:subClassOf geo:SpatialObject .
+
+
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry rdf:type owl:Class ;
+              rdfs:subClassOf geo:SpatialObject .
+
+
+###  http://www.opengis.net/ont/geosparql#SpatialObject
+geo:SpatialObject rdf:type owl:Class .
+
+
+###  http://www.opengis.net/ont/sf#Polygon
+sf:Polygon rdf:type owl:Class ;
+		   rdfs:subClassOf sf:Surface .
+
+
+###  http://www.opengis.net/ont/sf#Surface
+sf:Surface rdf:type owl:Class ;
+		   rdfs:subClassOf sf:Geometry .
+
+
+###  http://www.opengis.net/ont/sf#Geometry
+sf:Geometry rdf:type owl:Class ;
+		    rdfs:subClassOf geo:Geometry .
