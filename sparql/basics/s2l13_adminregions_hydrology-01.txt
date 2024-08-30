@@ -1,0 +1,22 @@
+# S2L13_AdminREgions and Hydrology basics
+# 
+# Run this query from the S2L13_AdminRegions repository
+# It quantifies the intersection of aquifers and county subdivisions
+#    by counting the number of s2 cells they have in common.
+
+PREFIX gwml: <http://www.opengis.net/gwml-main/2.2/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?twn ?aq (COUNT(?s2) AS ?num_aq_S2_in_twn) WHERE {
+    ?s2 rdf:type kwg-ont:S2Cell_Level13 .
+    ?twn rdf:type kwg-ont:AdministrativeRegion_3 .
+    ?s2 kwg-ont:sfOverlaps | kwg-ont:sfWithin ?twn .
+
+    SERVICE <repository:Hydrology> {
+        SELECT * WHERE {
+            ?aq rdf:type gwml:GW_Aquifer .
+    		?s2 kwg-ont:sfOverlaps | kwg-ont:sfWithin ?aq .
+        }
+    }
+} GROUP BY ?twn ?aq
