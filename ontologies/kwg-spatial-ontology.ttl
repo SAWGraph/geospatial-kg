@@ -1,0 +1,219 @@
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix schema: <http://schema.org/> .
+@prefix kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/> .
+
+<http://stko-kwg.geog.ucsb.edu/lod/ontology/spatiotemporal-ontology> rdf:type owl:Ontology ;
+                                                                      terms:contributor "Rui Zhu, Shirly Stephen, Mitchell Faulk"@en ;
+                                                                      terms:created "2024-06-20" ;
+                                                                      terms:creator "The KnowWhereGraph Project"@en ;
+                                                                      terms:description "This ontology supports the KnowWhereGraph"@en ;
+                                                                      terms:title "The KnowWhereGraph's Spatiotemporal Ontology"@en ;
+                                                                      owl:versionInfo "3.0"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/contributor
+terms:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+terms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+terms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+terms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+terms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://schema.org/domainIncludes
+schema:domainIncludes rdf:type owl:AnnotationProperty .
+
+
+###  http://schema.org/rangeIncludes
+schema:rangeIncludes rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#description
+skos:description rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#editorialNote
+skos:editorialNote rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#example
+skos:example rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#note
+skos:note rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfContains
+kwg-ont:sfContains rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                   owl:inverseOf kwg-ont:sfWithin ;
+                   rdfs:label "(kwg) sfContains" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfEquals
+kwg-ont:sfEquals rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                 rdf:type owl:ReflexiveProperty ;
+                 rdfs:label "(kwg) sfEquals" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfOverlaps
+kwg-ont:sfOverlaps rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                   rdf:type owl:SymmetricProperty ;
+                   rdfs:label "(kwg) sfOverlaps" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfTouches
+kwg-ont:sfTouches rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                  rdf:type owl:SymmetricProperty ;
+                  rdfs:label "(kwg) sfTouches" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfWithin
+kwg-ont:sfWithin rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf kwg-ont:spatialRelation ;
+                 rdfs:label "(kwg) sfWithin" .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/spatialRelation
+kwg-ont:spatialRelation rdf:type owl:ObjectProperty ;
+                        rdfs:label "(kwg) spatial relation" .
+
+
+###  http://www.opengis.net/ont/geosparql#defaultGeometry
+geo:defaultGeometry rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf geo:hasGeometry .
+
+
+###  http://www.opengis.net/ont/geosparql#hasGeometry
+geo:hasGeometry rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion
+kwg-ont:AdministrativeRegion rdf:type owl:Class ;
+                             rdfs:subClassOf kwg-ont:Region ,
+                                             geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/Cell
+kwg-ont:Cell rdf:type owl:Class ;
+             rdfs:subClassOf geo:SpatialObject .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/ClimateDivision
+kwg-ont:ClimateDivision rdf:type owl:Class ;
+                        rdfs:subClassOf kwg-ont:Region ,
+                                        geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/FederalJudicalDistrict
+kwg-ont:FederalJudicalDistrict rdf:type owl:Class ;
+                               rdfs:subClassOf kwg-ont:Region ,
+                                               geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/ForecastRegion
+kwg-ont:ForecastRegion rdf:type owl:Class ;
+                       rdfs:subClassOf kwg-ont:Region .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/NationalWeatherZone
+kwg-ont:NationalWeatherZone rdf:type owl:Class ;
+                            rdfs:subClassOf kwg-ont:Region ,
+                                            geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/NielsenMarketZone
+kwg-ont:NielsenMarketZone rdf:type owl:Class ;
+                          rdfs:subClassOf kwg-ont:Region ,
+                                          geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/Region
+kwg-ont:Region rdf:type owl:Class .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/RoadSegment
+kwg-ont:RoadSegment rdf:type owl:Class ;
+                    rdfs:subClassOf geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/S2Cell
+kwg-ont:S2Cell rdf:type owl:Class ;
+               rdfs:subClassOf kwg-ont:Cell ,
+                               geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/StatisticalArea
+kwg-ont:StatisticalArea rdf:type owl:Class ;
+                        rdfs:subClassOf kwg-ont:Region ,
+                                        geo:Feature .
+
+
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/ZipCodeArea
+kwg-ont:ZipCodeArea rdf:type owl:Class ;
+                    rdfs:subClassOf kwg-ont:Region ,
+                                    geo:Feature .
+
+
+###  http://www.opengis.net/ont/geosparql#Feature
+geo:Feature rdf:type owl:Class ;
+            rdfs:subClassOf geo:SpatialObject ;
+            rdfs:comment "Source - GeoSPARQL" ;
+            rdfs:label "Feature" .
+
+
+###  http://www.opengis.net/ont/geosparql#Geoometry
+geo:Geoometry rdf:type owl:Class ;
+              rdfs:subClassOf geo:SpatialObject ;
+              rdfs:comment "Source - GeoSPARQL" ;
+              rdfs:label "Geometry" .
+
+
+###  http://www.opengis.net/ont/geosparql#SpatialObject
+geo:SpatialObject rdf:type owl:Class ;
+                  rdfs:comment "Source - GeoSPARQL" ;
+                  rdfs:label "Spatial Object" .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
