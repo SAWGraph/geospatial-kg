@@ -1,0 +1,21 @@
+# S2L13_AdminRegions basics
+# Retrieve Maine county subdivisions from Penobscot County
+# 
+# This query returns county subdivisions from Penobscot County in Maine
+
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+    SERVICE <repository:S2L13_AdminRegions> {
+        SELECT * WHERE {
+            # Select county subdivisions and their names
+            #    from Penosbscot County, Maine (FIPS = 23019)
+    		?cousub rdf:type kwg-ont:AdministrativeRegion_3 ;
+            		kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.23019 ;
+            		rdfs:label ?cousub_label .
+        }
+    }
+} ORDER BY ?cousub_label

@@ -1,0 +1,34 @@
+# S2L13_AdminRegions and Hydrology basics
+# Count the number of aquifers that intersect Maine county subdivisions
+# 
+# It determines the intersection of aquifers and county subdivisions
+#    by finding the s2 cells they have in common and counts the number 
+#    of aquifers thus associated with each county subdivision
+
+PREFIX gwml: <http://www.opengis.net/gwml-main/2.2/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?cousub_label (COUNT(DISTINCT ?aq) AS ?num_aq) WHERE {
+    SERVICE <repository:S2L13_AdminRegions> {
+        SELECT * WHERE {
+            # Find county subdivisions from Maine and their labels
+            ?cousub rdf:type kwg-ont:AdministrativeRegion_3 ;
+            		kwg-ont:administrativePartOf/kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.23 ;
+            		rdfs:label ?cousub_label .
+            # Find S2 cells that intersect the county subdivisions
+            ?s2 kwg-ont:sfOverlaps | kwg-ont:sfWithin ?cousub ;
+            	rdf:type kwg-ont:S2Cell_Level13	.
+        }
+    }
+
+    SERVICE <repository:Hydrology> {
+        SELECT * WHERE {
+            # Find aquifers that intersect the county subdivision S2 cells
+            ?aq rdf:type gwml:GW_Aquifer .
+    		?s2 kwg-ont:sfOverlaps | kwg-ont:sfWithin ?aq .
+        }
+    }
+} GROUP BY ?cousub_label ORDER BY ?cousub_label
