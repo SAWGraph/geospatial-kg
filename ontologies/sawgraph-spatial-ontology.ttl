@@ -117,7 +117,7 @@ kwg-ont:sfWithin rdf:type owl:ObjectProperty ;
 
 ###  http://purl.org/spatialai/spatial/spatial-full#connectedTo
 spatial:connectedTo rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf spatial:spatialRelation ;
+                 rdfs:subPropertyOf spatial:spatiallyRelatedTo ;
                  rdfs:label "topological connection (spatial contact) (sawgraph)" .
 
 ###  http://purl.org/spatialai/spatial/spatial-full#spatiallyRelatedTo
