@@ -21,8 +21,8 @@ import datetime
 import logging
 
 ### INPUT Filenames ###
-# input_counties_s2: a zip file of S2L13 connections to counties
-# input_state_s2: a zip file of S2L13 connections to the state
+# input_counties: a zip file of S2L13 connections to counties
+# input_state: a zip file of S2L13 connections to the state
 input_counties_s2 = 'maine_counties_s2.zip'
 input_state_s2 = 'maine_state_s2.zip'
 

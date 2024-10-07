@@ -41,7 +41,7 @@ from variable import _PREFIX, find_s2_intersects_poly
 os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Administrative Regions')
 
 ### Input Filenames ###
-# towns_file: a county subdivisions .shp file from the US Census Bureau
+# cousub_file: a county subdivisions .shp file from the US Census Bureau
 #    County subdivision shapefiles: https://www.census.gov/cgi-bin/geo/shapefiles/index.php
 # s2_file: Level 13 S2 cells that overlap/are within Maine
 towns_file = '../Geospatial/Maine/tl_2023_23_cousub/tl_2023_23_cousub.shp'
