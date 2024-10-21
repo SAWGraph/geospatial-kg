@@ -148,37 +148,48 @@ geo:hasGeometry rdf:type owl:ObjectProperty .
 kwg-ont:AdministrativeRegion rdf:type owl:Class ;
                              rdfs:subClassOf kwg-ont:Region ,
                                              geo:Feature ;
-							 rdfs:comment "Source: Global Administrative Area Database (GADM)" .
+							 rdfs:comment "Administrative regoins as defined by the Global Administrative Area Database (GADM); see https://gadm.org/metadata.html" .
 
 
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_0
+kwg-ont:AdministrativeRegion_0 rdf:type owl:Class ;
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 0 administrative regions which represent countries." .
+							 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1
 kwg-ont:AdministrativeRegion_1 rdf:type owl:Class ;
-                             rdfs:subClassOf kwg-ont:AdministrativeRegion .
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 1 administrative regions which are the highest level of division of a country, such as US states, Canadian provinces, or French departments." .
 
 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2
 kwg-ont:AdministrativeRegion_2 rdf:type owl:Class ;
-                             rdfs:subClassOf kwg-ont:AdministrativeRegion .
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 2 administrative regions which further subdivide states, provinces, or departments. Examples include counties in the US" .
 
 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_3
 kwg-ont:AdministrativeRegion_3 rdf:type owl:Class ;
-                             rdfs:subClassOf kwg-ont:AdministrativeRegion .
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 3 administrative regions. In the US, these are subdivisions of counties, formally known as county subdivisions, such as minor civil divisions (e.g. towns ot townships) or census county divisions." .
 							 
 							 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_4
 kwg-ont:AdministrativeRegion_4 rdf:type owl:Class ;
-                             rdfs:subClassOf kwg-ont:AdministrativeRegion .
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 4 administrative regions." .
 
 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_5
 kwg-ont:AdministrativeRegion_5 rdf:type owl:Class ;
-                             rdfs:subClassOf kwg-ont:AdministrativeRegion .
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 5 administrative regions." .
 							 
 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_6
 kwg-ont:AdministrativeRegion_6 rdf:type owl:Class ;
-                             rdfs:subClassOf kwg-ont:AdministrativeRegion .							 
+                             rdfs:subClassOf kwg-ont:AdministrativeRegion ;
+							 rdfs:comment "GADM level 6 administrative regions." .
 
 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/Cell
