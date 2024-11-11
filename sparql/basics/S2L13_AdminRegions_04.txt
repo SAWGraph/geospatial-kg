@@ -1,4 +1,8 @@
+# S2L13_AdminRegions basics
 # Retrieve all county subdivisions for the state of Maine
+# 
+# Run this from the S2L13_AdminRegions repository
+# Retrieves all Maine county subdivisions
 
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
