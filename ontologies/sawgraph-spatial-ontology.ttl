@@ -114,6 +114,11 @@ kwg-ont:sfWithin rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf spatial:connectedTo ;
                  rdfs:label "sfWithin (kwg)" .
 
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfWithin
+kwg-ont:administrativePartOf rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf kwg-ont:sfWithin ;
+		rdfs:domain kwg-ont:AdministrativeRegion ;
+		rdfs:range kwg-ont:AdministrativeRegion .
 
 ###  http://purl.org/spatialai/spatial/spatial-full#connectedTo
 spatial:connectedTo rdf:type owl:ObjectProperty ;
