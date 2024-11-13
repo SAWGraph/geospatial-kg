@@ -34,24 +34,31 @@ import sys
 import os
 
 # Modify the system path to find namespaces.py
-sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
+sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Administrative Regions')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions')
+
+##################################
+### State Specific Identifiers ###
+state = 'Maine'
+state_short = 'me'
+state_fips = str(23)
+##################################
 
 ### Input Filenames ###
 # cousub_file: a county subdivisions .shp file from the US Census Bureau
 #    County subdivision shapefiles: https://www.census.gov/cgi-bin/geo/shapefiles/index.php
-cousub_file = '../Geospatial/Maine/tl_2023_23_cousub/tl_2023_23_cousub.shp'
+cousub_file = '../Geospatial/' + state + '/tl_2023_' + state_fips + '_cousub/tl_2023_' + state_fips + '_cousub.shp'
 
 ### Output Filename ###
 # ttl_file: the resulting (output) .ttl file
-ttl_file = 'ttl_files/me_admin-regions_level-3.ttl'
+ttl_file = 'ttl_files/' + state_short.lower() + '_admin-regions_level-3.ttl'
 
-statename = ', Maine'
+town_affix = ', ' + state
 
-logname = 'logs/log_ME_AdminRegionLevel3-2-ttl.txt'
+logname = 'logs/log_' + state_short.upper() + '_AdminRegionLevel3-2-ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -109,9 +116,13 @@ def main():
         graph.add((towniri, RDFS.label, Literal(name, datatype=XSD.string)))
         graph.add((towniri, _PREFIX["kwg-ont"]['administrativePartOf'],
                    _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
+        # graph.add((towniri, _PREFIX["kwg-ont"]['administrativePartOf'],
+        #            _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP]))
         graph.add((towniri, _PREFIX["kwg-ont"]['hasFIPS'], Literal(row.GEOID, datatype=XSD.string)))
-        graph.add((towniri, _PREFIX["kwg-ont"]['sfWithin'],
-                   _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
+        # graph.add((towniri, _PREFIX["kwg-ont"]['sfWithin'],
+        #            _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP + row.COUNTYFP]))
+        # graph.add((towniri, _PREFIX["kwg-ont"]['sfWithin'],
+        #            _PREFIX["kwgr"]['administrativeRegion.USA.' + row.STATEFP]))
         graph.add((towniri, GEO.hasGeometry, polyiri))
         graph.add((towniri, GEO.defaultGeometry, polyiri))
 

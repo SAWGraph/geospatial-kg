@@ -24,11 +24,11 @@ import sys
 import os
 
 # Modify the system path to find namespaces.py
-sys.path.insert(1, 'G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources')
+sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/UMaine Docs from Laptop/SAWGraph/Data Sources/Administrative Regions')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions')
 
 ### INPUT Filenames ###
 # input_counties: a .zip file of KnowWhereGraph level 2 administrative regions
@@ -38,7 +38,9 @@ input_state = 'ttl_files/maine_state.zip'
 
 ### OUTPUT Filenames ###
 # output_file: this is for the resulting .ttl file
+county_output_temp = 'ttl_files/me_admin-regions_level-2.tmp'
 county_output_file = 'ttl_files/me_admin-regions_level-2.ttl'
+state_output_temp = 'ttl_files/me_admin-regions_level-1.tmp'
 state_output_file = 'ttl_files/me_admin-regions_level-1.ttl'
 
 logname = 'logs/log_ME_AdminRegionLevels12-2-ttl.txt'
@@ -78,20 +80,46 @@ def process_zipped_ttl_files(infile, graph):
     return graph
 
 
+def remove_sfwithin(input_file, output_file):
+    with open(output_file, 'w') as outfile:
+        with open(input_file, 'r') as infile:
+            for line in infile:
+                if 'sfwithin' not in line.lower():
+                    outfile.write(line)
+
+
 if __name__ == "__main__":
     logger.info('Launching script')
     start_time = time.time()
+
     # Create an empty knowledge graph
     logger.info('Initializing graph')
     county_kg = initial_kg(_PREFIX)
     state_kg = initial_kg(_PREFIX)
+
     # Call the process_zipped_ttl_files function to add data to the knowledge graph
     logger.info('Processing the zipped admin region .ttl files')
     county_kg = process_zipped_ttl_files(input_counties, county_kg)
     state_kg = process_zipped_ttl_files(input_state, state_kg)
+
     # Write the resulting knowledge graph to a .ttl file
     logger.info('Creating the output .ttl file')
-    county_kg.serialize(county_output_file, format='ttl')
-    state_kg.serialize(state_output_file, format='ttl')
+    county_kg.serialize(county_output_temp, format='ttl')
+    state_kg.serialize(state_output_temp, format='ttl')
+
+    # Remove kwg-ont:sfWithin relations (these are inferred from
+    # kwg-ont:administrativePartOf when using the
+    # sawgraph-spatial-ontology.ttl) and create the final .ttl files
+    input_county = county_output_temp
+    output_county = county_output_file
+    remove_sfwithin(input_county, output_county)
+    input_state = state_output_temp
+    output_state = state_output_file
+    remove_sfwithin(input_state, output_state)
+
+    # Remove .tmp files
+    os.remove(county_output_temp)
+    os.remove(state_output_temp)
+
     print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
