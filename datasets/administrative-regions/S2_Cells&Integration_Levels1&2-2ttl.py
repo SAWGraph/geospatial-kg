@@ -1,4 +1,7 @@
-"""Creates three .ttl files - one each for a state's S2 files, its S2 integration, and its counties' S2 integration
+"""Creates four .ttl files - one for a state's S2 files,
+                             one for the state's S2 integration,
+                             one for the state's counties' S2 integration, and
+                             one for the state's S2 cell class statements
 
 Under ### STATE OF INTEREST ### enter
     the proper name of the state of interest (e.g., 'Alabama')
@@ -18,13 +21,14 @@ Required:
     * datetime, logging, os, ssl, sys, time
 
 Functions:
-    * get_state_fips -
-    * get_state_abbr -
+    * get_state_fips - Takes a state name (e.g., 'Alabama') and returns its FIPS code (e.g., '01') as a string
+    * get_state_abbr - Takes a state name (e.g., 'Alabama') and returns its abbreviation (e.g., 'AL')
     * initial_kg - initialize an RDFLib knowledge graph with project namespaces
-    * get_state_identifiers -
-    * state_s2_cells_2ttl -
-    * state_s2_cell_integration_2ttl -
-    * county_s2_cell_integration_2ttl -
+    * get_state_identifiers - Takes a state name and returns both its abbreviation, FIPS code, KWG IRI, and RDFLib IRI
+    * state_s2_cells_2ttl - Queries KWG for the S2 cells that overlap or are within a given state (cell info)
+    * state_s2_cell_integration_2ttl - Queries KWG for the S2 cell integration info for a state (relations)
+    * county_s2_cell_integration_2ttl - Queries KWG for the S2 cell integration info for a state's counties (relations)
+    * state_s2_cell_class_stmts_2ttl - Extracts only the S2 cell class statements from the S2 cell info
 """
 import pandas as pd
 from rdflib import Graph, Literal
