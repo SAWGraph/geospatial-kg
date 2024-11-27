@@ -2,13 +2,13 @@
 For SAWGraph, admininstrative regions include
 * States (AdministrativeRegion_1; from KnowWhereGraph)
 * Counties (AdministrativeRegion_2; from KnowWhereGraph)
-* "Towns" (AdministrativeRegion_3; from US Census Bureau county subdivisions - these are often townships)
+* County subdivisions (AdministrativeRegion_3; from US Census Bureau) - these are often townships
   * Actual towns and cities tend to be noncontiguous leaving a patchwork of gaps
   * This is as deep as the US Census Bureau goes with municipal subdivisions
 
 The representation of states and counties are from [GADM](https://gadm.org/data.html). There is no data for more granular regions, such as towns (AdministrativeRegion_3).
 
-Towns for any given state are represented by US Census Bureau county subdivisions. County subdivisions are also easy to link to Data Commons by their 10-digit FIPS code (GEOID).
+County subdivisions are easy to link to Data Commons by their 10-digit FIPS code (GEOID).
 Their shapefiles are available [here](https://www.census.gov/cgi-bin/geo/shapefiles/index.php).
 
 Currently, the graph includes county subdivisions from Maine and Illinois.
