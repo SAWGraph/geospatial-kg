@@ -45,7 +45,7 @@ sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions & S2L13')
 
 ### Output Filenames/Paths ###
 level1_outfile = 'ttl_files/AdministrativeRegion_1/us_admin-regions_level-1.ttl'

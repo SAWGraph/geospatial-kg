@@ -6,7 +6,7 @@ Under ### State-County-FIPS Table ### enter
     the path/filename to a .tsv file with State-County-FIPS info
     (see https://towardsdatascience.com/the-ultimate-state-county-fips-tool-1e4c54dc9dff)
 
-Note: Output file path/filename templates are embedded in the ..._2_ttl functions
+Note: Output file path/filename templates are embedded in the ..._2ttl functions
 
 Required:
     * pandas
@@ -45,7 +45,7 @@ sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions & S2L13')
 
 ### STATE OF INTEREST #########
 state_name = 'Maine'
@@ -202,7 +202,7 @@ def state_s2_cells_2ttl(name: str, endpoint: str, table: str) -> None:
         kg.add((touched_iri, _PREFIX['kwg-ont']['sfTouches'], s2_iri))
 
     # Write the completed KG to a .ttl file
-    kg.serialize('../S2L13/ttl_files/' + state_abbr + '_' + state_fips + '_s2-l13.ttl', format='turtle')
+    kg.serialize('ttl_files/S2_cells/' + state_abbr + '_' + state_fips + '_s2-l13.ttl', format='turtle')
 
 
 def state_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> None:
@@ -338,6 +338,35 @@ def county_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> Non
                  format='turtle')
 
 
+def state_s2_cell_class_stmts_2ttl(name: str, table: str) -> None:
+    """Given a state's proper name anda  State-County-FIPS data table,
+          writes only the S2 cell class statements for the state to a .ttl file
+
+    :param name: a string of a state's proper name (e.g., 'Alabama')
+    :param table: path/filename to a .tsv table of State-County-FIPS info
+    :return: None
+    """
+    abbr = get_state_abbr(table, name)
+    fips = get_state_fips(table, name)
+    input = 'ttl_files/S2_cells/' + abbr + '_' + fips + '_s2-l13.ttl'
+    output = 'ttl_files/S2_cells/' + abbr + '_' + fips + '_s2-l13_class-statements.ttl'
+    prefixes = ['@prefix kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/> .',
+                '@prefix kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/> .',
+                '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .']
+    # Create the output .ttl file
+    with open(output, 'w') as outfile:
+        # Add the prefixes to the output file
+        for prefix in prefixes:
+            outfile.write(prefix)
+            outfile.write('\n')
+        outfile.write('\n')
+        with open(input, 'r') as infile:
+            for line in infile:
+                # Finds the class statements for S2Cell_Level13
+                if 's2cell_level13' in line.lower():
+                    outfile.write(line.replace(';', '.'))  # Making sure syntax is correct
+
+
 if __name__ == "__main__":
     logger.info(f'Launching script: State = {state_name}')
     start_time = time.time()
@@ -347,5 +376,7 @@ if __name__ == "__main__":
     state_s2_cell_integration_2ttl(state_name, kwg_endpoint, scf_table)
     logger.info(f'Triplify {state_name} counties S2 cell integration (from KWG)')
     county_s2_cell_integration_2ttl(state_name, kwg_endpoint, scf_table)
+    logger.info(f'Triplify {state_name} S2 cell class statements (from KWG)')
+    state_s2_cell_class_stmts_2ttl(state_name, scf_table)
     print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
