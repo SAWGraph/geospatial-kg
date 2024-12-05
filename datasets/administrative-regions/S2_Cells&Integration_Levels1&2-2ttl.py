@@ -52,7 +52,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions & S2L13')
 
 ### STATE OF INTEREST #########
-state_name = 'Maine'
+state_name = 'Illinois'
 ### State-County-FIPS Table ###
 scf_table = 'fips2county.tsv'
 ###############################
@@ -350,10 +350,10 @@ def state_s2_cell_class_stmts_2ttl(name: str, table: str) -> None:
     :param table: path/filename to a .tsv table of State-County-FIPS info
     :return: None
     """
-    abbr = get_state_abbr(table, name)
+    abbr = get_state_abbr(table, name).lower()
     fips = get_state_fips(table, name)
     input = 'ttl_files/S2_cells/' + abbr + '_' + fips + '_s2-l13.ttl'
-    output = 'ttl_files/S2_cells/' + abbr + '_' + fips + '_s2-l13_class-statements.ttl'
+    output = 'ttl_files/class_statements/' + abbr + '_' + fips + '_s2-l13_class-statements.ttl'
     prefixes = ['@prefix kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/> .',
                 '@prefix kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/> .',
                 '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .']
