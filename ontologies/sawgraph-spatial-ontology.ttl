@@ -13,7 +13,7 @@
 <http://purl.org/spatialai/spatial/spatial-full> rdf:type owl:Ontology ;
                                                                       terms:contributor "Shirly Stephen"@en, "Torsten Hahmann"@en ;
                                                                       terms:created "2024-06-20" ;
-                                                                      terms:modified "2024-10-01" ;
+                                                                      terms:modified "2024-12-10" ;
                                                                       terms:publisher "SAWGraph Project Team"@en ;
                                                                       terms:creator "Torsten Hahmann, SAWGraph Project"@en ;
                                                                       terms:description "This ontology supports querying the SAWGraph Knowledge Graph and the KnowWhereGraph. It is an adaptation of the spatial ontology originally published by the KnowWhereGraph Project"@en ;
@@ -114,7 +114,7 @@ kwg-ont:sfWithin rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf spatial:connectedTo ;
                  rdfs:label "sfWithin (kwg)" .
 
-###  http://stko-kwg.geog.ucsb.edu/lod/ontology/sfWithin
+###  http://stko-kwg.geog.ucsb.edu/lod/ontology/administrativePartOf
 kwg-ont:administrativePartOf rdf:type owl:ObjectProperty ;
 		rdfs:subPropertyOf kwg-ont:sfWithin ;
 		rdfs:domain kwg-ont:AdministrativeRegion ;
