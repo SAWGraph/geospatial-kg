@@ -45,7 +45,7 @@ sys.path.insert(1, 'G:/My Drive/Laptop/SAWGraph/Data Sources')
 from namespaces import _PREFIX
 
 # Set the current directory to this file's directory
-os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Administrative Regions & S2L13')
+os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Spatial')
 
 ### Output Filenames/Paths ###
 level1_outfile = 'ttl_files/AdministrativeRegion_1/us_admin-regions_level-1.ttl'
@@ -152,6 +152,7 @@ def admin_regions_level1_2ttl(endpoint:str, outfile:str) -> list:
 
             # Create triples
             kg.add((state_iri, RDF.type, _PREFIX['kwg-ont']['AdministrativeRegion_1']))
+            kg.add((state_iri, OWL.sameAs, _PREFIX['dcgeoid'][df_temp['fips'].iloc[0]]))
             kg.add((state_iri, RDFS.label, Literal(df_temp['label'].iloc[0], datatype=XSD.string)))
             kg.add((state_iri, _PREFIX['kwg-ont']['administrativePartOf'], usa_iri))
             kg.add((state_iri, _PREFIX['kwg-ont']['hasFIPS'], Literal(df_temp['fips'].iloc[0], datatype=XSD.string)))
@@ -236,6 +237,7 @@ def admin_regions_level2_2ttl(endpoint:str, outpath:str, iris:list) -> None:
 
                     # Create triples
                     kg.add((county_iri, RDF.type, _PREFIX['kwg-ont']['AdministrativeRegion_2']))
+                    kg.add((county_iri, OWL.sameAs, _PREFIX['dcgeoid'][df_temp['fips'].iloc[0]]))
                     kg.add((county_iri, RDFS.label, Literal(df_temp['label'].iloc[0], datatype=XSD.string)))
                     kg.add((county_iri, _PREFIX['kwg-ont']['administrativePartOf'], state_iri))
                     kg.add((county_iri, _PREFIX['kwg-ont']['hasFIPS'],
@@ -255,6 +257,7 @@ def admin_regions_level2_2ttl(endpoint:str, outpath:str, iris:list) -> None:
             kg.serialize(output_file, format='turtle')  # Write the completed KG to a .ttl file
         # Alert the user if a territory is skipped
         else:
+            logger.info(f'Skipped counties for {df_county['state_label'].iloc[0]}')
             print(f'Skipped counties for {df_county['state_label'].iloc[0]}')
 
 
