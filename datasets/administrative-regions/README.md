@@ -7,12 +7,13 @@ AdminRegionsLevel3-2ttl.py:
 * Creates a .ttl file for all county subdivisions in a given state from data in a TIGER shapefile from the US Census Bureau.
 
 AdminRegion_state_class-statements_2ttl.py:
-* Creates a .ttl file containing only class assignments (x rdf:type kwg-ont:AdministrativeRegion_#) from the above files. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being a member of a given class.
+* Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:AdministrativeRegion_*#*) from the above files. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being a specific administrative region level.
 
 S2_Cells&Integration_Levels1&2-2ttl.py
 * Creates a .ttl file of all S2 cells (Level 13) that overlap or are within a given state. This data is queried from KnowWhereGraph.
 * Creates a .ttl file with the S2 integration (Level 13) for the given state. This data is queried from KnowWhereGraph.
 * Creates a .ttl file with the S2 integration (Level 13) for all of the counties in the given state. This data is queried from KnowWhereGraph.
+* Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:S2Cell_Level13) from the first file above. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being Level 13 S2 Cells.
 
 ## Administrative Regions
 For SAWGraph, admininstrative regions include
