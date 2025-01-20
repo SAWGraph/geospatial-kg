@@ -52,7 +52,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Spatial')
 
 ### STATE OF INTEREST #########
-state_name = 'Illinois'
+state_name = 'Montana'
 ### State-County-FIPS Table ###
 scf_table = 'fips2county.tsv'
 ###############################
@@ -67,7 +67,7 @@ kwg_sparql.setHTTPAuth(DIGEST)
 kwg_sparql.setMethod(GET)
 kwg_sparql.setReturnFormat(JSON)
 
-logname = 'logs/log_S2_Cells&Integration_Levels1&2-2-ttl.txt'
+logname = 'logs/log_S2_Cells&Integration_Levels1&2-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',

@@ -61,7 +61,7 @@ kwg_sparql.setHTTPAuth(DIGEST)
 kwg_sparql.setMethod(GET)
 kwg_sparql.setReturnFormat(JSON)
 
-logname = 'logs/log_AdminRegionLevel1&2-2-ttl.txt'
+logname = 'logs/log_AdminRegionLevel1&2-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -105,6 +105,7 @@ def admin_regions_level1_2ttl(endpoint:str, outfile:str) -> list:
     :return: a list of KWG IRIs for the US states
     """
     # Query to retrieve the state IRIs
+    logger.info('Retrieve state IRIs from KWG')
     query = """
         PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
         PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
@@ -117,8 +118,10 @@ def admin_regions_level1_2ttl(endpoint:str, outfile:str) -> list:
         """
     df = sparql_dataframe.get(endpoint, query)  # execute the query and return the results as a dataframe
     state_iris = df['state'].to_list()  # convert the state column to a list
+    logger.info('Intialize RDFLib Graph for states')
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
     # Query each state and add the resulting KWG info to the KG
+    logger.info('Retrieve basic state info for each state from KWG and triplify')
     for state in state_iris:
         # Query to retrieve state info
         query = """
@@ -163,12 +166,13 @@ def admin_regions_level1_2ttl(endpoint:str, outfile:str) -> list:
             kg.add((geom_iri, GEO.asWKT, Literal(df_temp['wkt'].iloc[0], datatype=GEO.wktLiteral)))
         # Alert the user if the state query returned more (or less) than one row
         elif df_temp.shape[0] != 1:
-            logger.info(f'State query for {df_temp['label'].iloc[0]} returned {df_temp.shape[0]} rows; expected 1')
+            logger.info(f'   State query for {df_temp['label'].iloc[0]} returned {df_temp.shape[0]} rows; expected 1')
             print(f'State query for {df_temp['label'].iloc[0]} returned {df_temp.shape[0]} rows; expected 1')
         # Alert the user when a territory is skipped
         else:
-            logger.info(f'Skipped {df_temp['label'].iloc[0]}')
+            logger.info(f'   Skipped {df_temp['label'].iloc[0]}')
             print(f'Skipped {df_temp['label'].iloc[0]}')
+    logger.info(f'Write state triples to {outfile}')
     kg.serialize(outfile, format='turtle')    # Write the completed KG to a .ttl file
     return state_iris  # These are needed for processing the counties by state
 
@@ -182,6 +186,7 @@ def admin_regions_level2_2ttl(endpoint:str, outpath:str, iris:list) -> None:
     :return: None
     """
     # Process each state's counties one state at a time
+    logger.info("Process each state's counties")
     for state in iris:
         kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
         # Query KWG for a state's fips code, name, and counties
@@ -257,16 +262,14 @@ def admin_regions_level2_2ttl(endpoint:str, outpath:str, iris:list) -> None:
             kg.serialize(output_file, format='turtle')  # Write the completed KG to a .ttl file
         # Alert the user if a territory is skipped
         else:
-            logger.info(f'Skipped counties for {df_county['state_label'].iloc[0]}')
+            logger.info(f'   Skipped counties for {df_county['state_label'].iloc[0]}')
             print(f'Skipped counties for {df_county['state_label'].iloc[0]}')
 
 
 if __name__ == "__main__":
-    logger.info(f'Launching script')
     start_time = time.time()
-    logger.info('Triplifying data for 50 US states + DC (1 output file)')
+    logger.info(f'Launching script: KWG endpoint = {kwg_endpoint}')
     state_iris = admin_regions_level1_2ttl(kwg_endpoint, level1_outfile)
-    logger.info('Triplifying data for the counties in each of the 50 states + DC (51 output files)')
     admin_regions_level2_2ttl(kwg_endpoint, level2_outpath, state_iris)
     print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')

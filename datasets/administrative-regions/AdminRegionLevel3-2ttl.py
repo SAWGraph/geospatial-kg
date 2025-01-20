@@ -24,6 +24,7 @@ Required Python packages:
 Functions:
     * get_state_abbr - Takes a state name (e.g., 'Alabama') and returns its abbreviation (e.g., 'AL')
     * get_state_fips - Takes a state name (e.g., 'Alabama') and returns its FIPS code (e.g., '01') as a string
+    * get_county_name - Takes a 5-digit county FIPS code (e.g., '23007' and returns its county name (e.g., Franklin County)
     * get_state_identifiers - Takes a state name and returns both its abbreviation (lower case) and its FIPS code
     * get_input_file_name - Takes a state name and its FIPS code and creates a file path/name string
     * get_output_file_name - Takes a state abbreviation and its FIPS code and creates a file path/name string
@@ -52,7 +53,7 @@ os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Spatial')
 
 ### GLOBAL VARIABLES #########################################################################
 ### State Identifier ###
-state_name = 'Maine'
+state_name = 'Rhode Island'
 cousub_affix = ', ' + state_name
 
 ### Input Filename ###
@@ -67,7 +68,7 @@ cousub_affix = ', ' + state_name
 fips_file = 'fips2county.tsv'
 ################################################################################################
 
-logname = 'logs/log_AdminRegionLevel3-2-ttl.txt'
+logname = 'logs/log_AdminRegionLevel3-2ttl.txt'
 logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -78,47 +79,47 @@ logger.info('')
 logger.info('LOGGER INITIALIZED')
 
 
-def get_state_abbr(name: str) -> str:
+def get_state_abbr(name: str, df: pd.DataFrame) -> str:
     """Given a state's proper name returns the 2-character abbreviation
 
     :param name: A state's proper name (eg Alabama)
+    :param df: A DataFrame of state and county names, abbreviations, and FIPS codes
     :return: A state's 2-character abbreviation (eg AL)
     """
-    df_fips = pd.read_csv(fips_file, sep='\t', header='infer', dtype=str, encoding='latin-1')
-    state_abbr_df = df_fips[["StateName", "StateAbbr"]].drop_duplicates()
+    state_abbr_df = df[["StateName", "StateAbbr"]].drop_duplicates()
     return state_abbr_df.loc[state_abbr_df["StateName"] == name, "StateAbbr"].values[0]
 
 
-def get_state_fips(name: str) -> str:
+def get_state_fips(name: str, df: pd.DataFrame) -> str:
     """Given a state's proper name returns the 2-digit FIPS code
 
     :param name: A state's proper name (eg Alabama)
+    :param df: A DataFrame of state and county names, abbreviations, and FIPS codes
     :return: A state's 2-digit FIPS code (eg 01) as a 2-character string
     """
-    df_fips = pd.read_csv(fips_file, sep='\t', header='infer', dtype=str, encoding='latin-1')
-    state_fips_df = df_fips[["StateName", "StateFIPS"]].drop_duplicates()
+    state_fips_df = df[["StateName", "StateFIPS"]].drop_duplicates()
     return str(state_fips_df.loc[state_fips_df["StateName"] == name, "StateFIPS"].values[0]).zfill(2)
 
 
-def get_state_identifiers(name: str) -> tuple:
+def get_state_identifiers(name: str, df: pd.DataFrame) -> tuple:
     """Given a state's proper name returns the 2-character abbreviation (in lower case) and the 2-digit FIPS code
 
     :param name: A state's proper name (eg Alabama)
+    :param df: A DataFrame of state and county names, abbreviations, and FIPS codes
     :return: A state's 2-character abbreviation (eg AL) and the state's 2-digit FIPS code (eg 01) as a 2-character string
     """
-    abbr = get_state_abbr(name).lower()
-    fips = get_state_fips(name)
+    abbr = get_state_abbr(name, df).lower()
+    fips = get_state_fips(name, df)
     return abbr, fips
 
 
-def get_input_file_name(name, fips):
-    """Given a state's name and FIPS code, returns a path / filename for the input file (user specific)
+def get_input_file_name(fips: str):
+    """Given a state's FIPS code, returns a path / filename for the input file (user specific)
 
-    :param name: A state's proper name (e.g., 'Alabama')
     :param fips: A state's 2-digit FIPS code (as a string) (e.g., '01')
     :return: The path / filename for an input shape file for a specific state
     """
-    return '../Geospatial/' + name + '/tl_2023_' + fips + '_cousub/tl_2023_' + fips + '_cousub.shp'
+    return '../Geospatial/CountySubdivisionShpFiles/tl_2023_' + fips + '_cousub/tl_2023_' + fips + '_cousub.shp'
 
 
 def get_output_file_name(abbr, fips):
@@ -152,21 +153,31 @@ def build_iris(gid: str) -> tuple:
     return _PREFIX["dcgeoid"][gid], _PREFIX["saw_geo"]['d.Polygon.administrativeRegion.USA.' + gid]
 
 
-def county_subs_2ttl(infile: str, outfile: str) -> None:
+def county_subs_2ttl(state: str, infile: str, outfile: str, df: pd.DataFrame) -> None:
     """Parse all county subdivisions within a state to an RDFLib knowledge graph
 
+    :param state: The name of the current state
     :param infile: A string with the path / filename for a Cenusus Bureau .shp file of county subdivisions for a state
     :param outfile: A string with the path / filename for a .ttl file
+    :param df: A DataFrame containing 5-digit county FIPS codes and county names
     :return: None
     """
     gdf_towns = gpd.read_file(infile)  # Read the .shp file to a GeoDataframe
-    logger.info('Intializing the knowledge graph')
+    logger.info('Intialize RDFLib Graph')
     graph = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
     count = 1  # For providing progress updates to the user via the terminal
     n = len(gdf_towns.index)  # For providing progress updates to the user via the terminal
-    logger.info(f'Processing the county subdivisions (AdministrativeRegion_3) for {state_name}')
+    logger.info(f'Triplify county subdivisions (AdministrativeRegion_3) for {state_name} from {infile}')
     for row in gdf_towns.itertuples():
-        name = row.NAMELSAD + cousub_affix  # Creates a string of the form 'CountySub, State' (ala KWG counties)
+        county = df.loc[df["CountyFIPS"] == str(row.STATEFP) + str(row.COUNTYFP), "CountyName"].values[0]
+        if state in ['Alaska', 'Connecticut', 'District of Columbia', 'Louisiana']:
+            name = row.NAMELSAD + ', ' + county + cousub_affix  # Creates a string of the form 'CountySub, County, State'
+            # Alaska has Boroughs and Census Areas
+            # Connecticut has Planning Regions
+            # DC is a single unit
+            # Louisiana has Parishes
+        else:
+            name = row.NAMELSAD + ', ' + county + ' County' + cousub_affix  # Creates a string of the form 'CountySub, County, State'
         # Get IRIs for the current county subdivision and its polygon geometry
         cousub_iri, geo_iri = build_iris(row.GEOID)
 
@@ -188,18 +199,19 @@ def county_subs_2ttl(infile: str, outfile: str) -> None:
         print(f'Row {count:3} of {n} : {name:50}', end='\r', flush=True)
         count += 1
     print()
-    logger.info(f'Creating {ttl_file}')
+    logger.info(f'Write {state} county subdivision triples to {ttl_file}')
     graph.serialize(outfile, format='turtle')  # Write the current state KG to a .ttl file
-
 
 if __name__ == "__main__":
     logger.info(f'Launching script: State = {state_name}')
     start_time = time.time()
     # Create input and output file names for specified state and a template (user/machine specific)
-    state_abbr, state_fips = get_state_identifiers(state_name)
-    cousub_file = get_input_file_name(state_name, state_fips)
+    df_fips = pd.read_csv(fips_file, sep='\t', header='infer', dtype=str, encoding='latin-1')
+    df_fips_county = df_fips[["CountyFIPS", "CountyName"]].drop_duplicates()
+    state_abbr, state_fips = get_state_identifiers(state_name, df_fips)
+    cousub_file = get_input_file_name(state_fips)
     ttl_file = get_output_file_name(state_abbr, state_fips)
     # Process the specified state's county subdivisions
-    county_subs_2ttl(cousub_file, ttl_file)
+    county_subs_2ttl(state_name, cousub_file, ttl_file, df_fips_county)
     print(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
     logger.info(f'Runtime: {str(datetime.timedelta(seconds=time.time() - start_time))} HMS')
