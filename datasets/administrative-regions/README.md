@@ -27,25 +27,25 @@ For SAWGraph, admininstrative regions include
 
 County subdivisions (cousub) are easy to link to Data Commons by their 10-digit FIPS code (GEOID).
 
-| cousub attribute | Description | Lift to graph | Ontology property |
-| --- | --- | --- |--- |
-| STATEFP | State FIPS code | Yes | kwg-ont:administrativePartOf |
-| COUNTYFP | County FIPS code | Yes | kwg-ont:administrativePartOf |
-| COUSUBFP | County subdivision FIPS code | No |  |
-| COUSUBNS | County subdivision ANSI feature code | No |  |
-| GEOID | County subidivision identifier | Yes | kwg-ont:hasFIPS |
-| GEOIDFQ | Fully qualified GEOID | No |  |
-| NAME | County subdivision name | No |  |
-| NAMELSAD | Name and legal/statistical area description code | Yes | rdfs:label |
-| LSAD | Legal/statistical area description code | No |  |
-| CLASSFP | FIPS class code | No |  |
-| MTFCC | MAF/TIGER feature class code | No |  |
-| FUNCSTAT | Functional status | No |  |
-| ALAND | Land area | No |  |
-| AWATER | Water area | No |  |
-| INTPTLAT | Internal point latitude | No |  |
-| INTPTLON | Internal point longitude | No |  |
-| geometry | Polygon | Yes | geo:hasGeometry/geo:asWKT |
+| cousub attribute | Description | Lift to graph | Ontology property | Notes |
+| --- | --- | --- | --- | --- |
+| STATEFP | State FIPS code | Yes | kwg-ont:administrativePartOf | STATEFP + COUNTYFP |
+| COUNTYFP | County FIPS code | Yes | kwg-ont:administrativePartOf | STATEFP + COUNTYFP |
+| COUSUBFP | County subdivision FIPS code | No |  |  |
+| COUSUBNS | County subdivision ANSI feature code | No |  |  |
+| GEOID | County subidivision identifier | Yes | kwg-ont:hasFIPS |  |
+| GEOIDFQ | Fully qualified GEOID | No |  |  |
+| NAME | County subdivision name | No |  |  |
+| NAMELSAD | Name and legal/statistical area description code | Yes | rdfs:label | + County + State |
+| LSAD | Legal/statistical area description code | No |  |  |
+| CLASSFP | FIPS class code | No |  |  |
+| MTFCC | MAF/TIGER feature class code | No |  |  |
+| FUNCSTAT | Functional status | No |  |  |
+| ALAND | Land area | No |  |  |
+| AWATER | Water area | No |  |  |
+| INTPTLAT | Internal point latitude | No |  |  |
+| INTPTLON | Internal point longitude | No |  |  |
+| geometry | Polygon | Yes | geo:hasGeometry/geo:asWKT |  |
 
 Currently, the graph includes county subdivisions from Maine, Illinois, Ohio, and Kansas.
 
