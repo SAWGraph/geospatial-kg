@@ -2,9 +2,11 @@
 AdminRegionsLevel1&2-2ttl.py:
 * Creates us_admin-regions_level-1.ttl file with US state information queried from [KnowWhereGraph](https://stko-kwg.geog.ucsb.edu/graphdb/sparql).
 * Creates a unique .ttl file for each US state with that state's county information queried from KnowWhereGraph.
+* Adds an `owl:sameAs` relation to a `dcgeoid` identifier for linking to Data Commons.
 
 AdminRegionsLevel3-2ttl.py:
 * Creates a .ttl file for all county subdivisions in a given state from data in a TIGER shapefile from the US Census Bureau.
+* See the table below for additional detail.
 
 AdminRegion_state_class-statements_2ttl.py:
 * Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:AdministrativeRegion_*#*) from the above files. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being a specific administrative region level.
