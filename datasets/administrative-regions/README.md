@@ -54,7 +54,7 @@ Currently, the graph includes county subdivisions from Maine, Illinois, Ohio, an
 ## S2 Cells
 S2 cells are available to SAWGraph via the KnowWhereGraph project. Level 13 are currently in use. The cells, their integration with Level 1 and Level 2 administrative regions, and a smaller "class statement only" version are all processed via the S2 script included here, which supercedes the scripts found in the [s2cells](/datasets/s2cells) folder.
 
-## Additional Administratieve Region Information
+## Additional Administrative Region Information
 For the state of Maine (ME) town and parcel data can be downloaded from the Maine State GeoLibrary Data Catalog
   1. [Maine Town and Townships Boundary Polygons Feature](https://maine.hub.arcgis.com/datasets/maine::maine-town-and-townships-boundary-polygons-feature-1/explore?showTable=true)
   2. [Maine Parcels Organized Towns Feature](https://maine.hub.arcgis.com/maps/maine::maine-parcels-organized-towns-feature/about) and [Maine Parcels Unorganized Territory](https://maine.hub.arcgis.com/datasets/868097d1a133446f8ffae242929a25dd/explore)
