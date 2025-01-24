@@ -15,8 +15,7 @@ Required:
     * pandas
     * rdflib (Graph and Literal)
     * rdflib.namespace (GEO, RDF, RDFS, and XSD)
-    * SPARQLWrapper (SPARQLWrapper, JSON, GET, DIGEST)
-    * sparql_dataframe
+    * SPARQLWrapper (SPARQLWrapper, JSON, GET, DIGEST, get_sparql_dataframe)
     * namespaces (a local .py file with a dictionary of project namespaces)
     * datetime, logging, os, ssl, sys, time
 
@@ -33,8 +32,7 @@ Functions:
 import pandas as pd
 from rdflib import Graph, Literal
 from rdflib.namespace import GEO, OWL, PROV, RDF, RDFS, SDO, XSD
-from SPARQLWrapper import SPARQLWrapper, JSON, GET, POST, DIGEST
-import sparql_dataframe
+from SPARQLWrapper import SPARQLWrapper, JSON, GET, POST, DIGEST, get_sparql_dataframe
 
 import logging
 import time
@@ -52,7 +50,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Spatial')
 
 ### STATE OF INTEREST #########
-state_name = 'Montana'
+state_name = 'Washington'
 ### State-County-FIPS Table ###
 scf_table = 'fips2county.tsv'
 ###############################
@@ -164,7 +162,7 @@ def state_s2_cells_2ttl(name: str, endpoint: str, table: str) -> None:
             ?s2_12 rdf:type kwg-ont:S2Cell_Level12 .
         }
         """
-    df = sparql_dataframe.get(endpoint, query_cells)  # execute the query and return the results as a dataframe
+    df = get_sparql_dataframe(endpoint, query_cells)  # execute the query and return the results as a dataframe
 
     # Create two additional dataframes: one without sfTouches data and one with only S2 IRI and sfTouches data
     df_s2 = df.drop('touched', axis=1)
@@ -232,7 +230,7 @@ def state_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> None
             	rdf:type kwg-ont:S2Cell_Level13 .
         }
         """
-    df_within = sparql_dataframe.get(endpoint, query_within)  # execute the query and return the results as a dataframe
+    df_within = get_sparql_dataframe(endpoint, query_within)  # execute the query and return the results as a dataframe
 
     # Query to find S2 cells overlapping a given state's boundary
     query_overlaps = """
@@ -245,7 +243,7 @@ def state_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> None
             	rdf:type kwg-ont:S2Cell_Level13 .
         }
         """
-    df_overlaps = sparql_dataframe.get(endpoint, query_overlaps)  # execute query and return results as a dataframe
+    df_overlaps = get_sparql_dataframe(endpoint, query_overlaps)  # execute query and return results as a dataframe
 
     kg = initial_kg(_PREFIX)  # Create an empty Graph() with SAWGraph namespaces
     for row in df_within.itertuples():
@@ -292,7 +290,7 @@ def county_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> Non
                         rdf:type kwg-ont:AdministrativeRegion_2 .
             } ORDER BY ?county
             """
-    df_county = sparql_dataframe.get(endpoint, query_counties)  # execute query and return results as a dataframe
+    df_county = get_sparql_dataframe(endpoint, query_counties)  # execute query and return results as a dataframe
     county_iris = df_county['county'].to_list()  # Create a list of the state's counties' IRIs
     for county in county_iris:
         # Query to find S2 cells within a given county's boundary
@@ -306,7 +304,7 @@ def county_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> Non
                     	rdf:type kwg-ont:S2Cell_Level13 .
                 }
                 """
-        df_within = sparql_dataframe.get(endpoint, query_within)  # execute query and return results as a dataframe
+        df_within = get_sparql_dataframe(endpoint, query_within)  # execute query and return results as a dataframe
 
         # Query to find S2 cells overlapping a given county's boundary
         query_overlaps = """
@@ -319,7 +317,7 @@ def county_s2_cell_integration_2ttl(name: str, endpoint: str, table: str) -> Non
                     	rdf:type kwg-ont:S2Cell_Level13 .
                 }
                 """
-        df_overlaps = sparql_dataframe.get(endpoint, query_overlaps)  # execute query and return results as a dataframe
+        df_overlaps = get_sparql_dataframe(endpoint, query_overlaps)  # execute query and return results as a dataframe
         county_fips = county[-5:]  # Extract the current county's FIPS code from its IRI
         county_rdflib_iri = _PREFIX['kwgr']['administrativeRegion.USA.' + county_fips]  # Create a county IRI
         for row in df_within.itertuples():
