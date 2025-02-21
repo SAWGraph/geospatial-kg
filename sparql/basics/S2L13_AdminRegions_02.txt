@@ -1,4 +1,4 @@
-# S2L13_AdminRegions basics
+# Spatial basics
 # Retrieve Maine county subdivisions from Penobscot County
 # 
 # This query returns county subdivisions from Penobscot County in Maine
