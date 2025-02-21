@@ -18,14 +18,21 @@ S2_Cells&Integration_Levels1&2-2ttl.py
 * Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:S2Cell_Level13) from the first file above. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being Level 13 S2 Cells.
 
 ## Administrative Regions
-For SAWGraph, admininstrative regions include
-* States (AdministrativeRegion_1; from [KnowWhereGraph](https://www.knowwheregraph.org/))
-* Counties (AdministrativeRegion_2; from [KnowWhereGraph](https://www.knowwheregraph.org/))
-* County subdivisions (AdministrativeRegion_3; from [US Census Bureau](https://www.census.gov/cgi-bin/geo/shapefiles/index.php)) - these are often townships
-  * This is as deep as the US Census Bureau goes with municipal subdivisions
-  * Actual towns and cities tend to be noncontiguous leaving a patchwork of gaps
-  * SAWGraph currently uses the 2023 versions of the County Subdivision shapefiles.
-  * S2 integration is performed with the assistance of scripts from KnowWhereGraph
+Administrative regions are classified according to GADM. SAWGraph uses the first four levels: 0 country (implicit), 1 state, 2 county, and 3 county subdivision.
+
+### Administrative Regions: Level 1 (KnowWhereGraph)
+SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) along with their S2 integration.
+
+### Administrative Regions: Level 2 (KnowWhereGraph)
+SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) along with their S2 integration.
+
+### Administrative Regions: Level 3 (US Census Bureau County Subdivisions)
+SAWGraph obtains these from [US Census Bureau](https://www.census.gov/cgi-bin/geo/shapefiles/index.php)).
+* County subdivisions are often townships but can also correspond to towns, especially in New England.
+* This is as deep as the US Census Bureau goes with municipal subdivisions.
+* Actual towns and cities tend to be noncontiguous leaving a patchwork of gaps.
+* SAWGraph currently uses the 2023 versions of the County Subdivision shapefiles.
+* S2 integration is performed with the assistance of scripts from KnowWhereGraph
 
 County subdivisions (cousub) are easy to link to Data Commons by their 10-digit FIPS code (GEOID).
 
