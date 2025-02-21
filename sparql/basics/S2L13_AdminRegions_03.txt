@@ -1,4 +1,4 @@
-# S2L13_AdminRegions basics
+Spatial basics
 # Retrieve the geometry for Orono, Maine (a county subdivision)
 # 
 # This query returns a polygon (in WKT) that represents the boundary of Orono, Maine
@@ -9,14 +9,14 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT * WHERE {
-    SERVICE <repository:S2L13_AdminRegions> {
+    SERVICE <repository:Spatial> {
         SELECT * WHERE {
             # Select county subdivisions, their names, and geometries
     		?cousub rdf:type kwg-ont:AdministrativeRegion_3 ;
             		rdfs:label ?cousub_label ;
             		geo:hasGeometry / geo:asWKT ?geom .
             # Keep only the result for Orono
-            FILTER(?cousub_label = "Orono town, Maine")
+            FILTER(?cousub_label = "Orono town, Penobscot County, Maine")
         }
     }
 } ORDER BY ?cousub_label
