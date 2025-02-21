@@ -1,17 +1,7 @@
-## Scripts
-AdminRegionsLevel1&2-2ttl.py:
-* Creates us_admin-regions_level-1.ttl file with US state information queried from [KnowWhereGraph](https://stko-kwg.geog.ucsb.edu/graphdb/sparql).
-* Creates a unique .ttl file for each US state with that state's county information queried from KnowWhereGraph.
-* Adds an `owl:sameAs` relation to a `dcgeoid` identifier for linking to Data Commons.
+## S2 Cells
+S2 cells are available to SAWGraph via the KnowWhereGraph project. Level 13 are currently in use. The cells, their integration with Level 1 and Level 2 administrative regions, and a smaller "class statement only" version are all processed via the S2 script included here, which supercedes the scripts found in the [s2cells](/datasets/s2cells) folder.
 
-AdminRegionsLevel3-2ttl.py:
-* Creates a .ttl file for all county subdivisions in a given state from data in a TIGER shapefile from the US Census Bureau.
-* See the table below for additional detail.
-
-AdminRegion_state_class-statements_2ttl.py:
-* Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:AdministrativeRegion_*#*) from the above files. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being a specific administrative region level.
-
-S2_Cells&Integration_Levels1&2-2ttl.py
+**Script**: *S2_Cells&Integration_Levels1&2-2ttl.py*
 * Creates a .ttl file of all S2 cells (Level 13) that overlap or are within a given state. This data is queried from KnowWhereGraph.
 * Creates a .ttl file with the S2 integration (Level 13) for the given state. This data is queried from KnowWhereGraph.
 * Creates a .ttl file with the S2 integration (Level 13) for all of the counties in the given state. This data is queried from KnowWhereGraph.
@@ -20,11 +10,21 @@ S2_Cells&Integration_Levels1&2-2ttl.py
 ## Administrative Regions
 Administrative regions are classified according to GADM. SAWGraph uses the first four levels: 0 country (implicit), 1 state, 2 county, and 3 county subdivision.
 
+**Script**: *AdminRegion_state_class-statements_2ttl.py*
+* Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:AdministrativeRegion_*#*) from the above files. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being a specific administrative region level.
+
 ### Administrative Regions: Level 1 (KnowWhereGraph)
 SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) along with their S2 integration.
 
+**Script**: *AdminRegionsLevel1&2-2ttl.py*
+* Creates us_admin-regions_level-1.ttl file with US state information queried from [KnowWhereGraph](https://stko-kwg.geog.ucsb.edu/graphdb/sparql).
+* Creates a unique .ttl file for each US state with that state's county information queried from KnowWhereGraph.
+* Adds an `owl:sameAs` relation to a `dcgeoid` identifier for linking to Data Commons.
+
 ### Administrative Regions: Level 2 (KnowWhereGraph)
 SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) along with their S2 integration.
+
+**Script**: See *AdminRegionsLevel1&2-2ttl.py* above.
 
 ### Administrative Regions: Level 3 (US Census Bureau County Subdivisions)
 SAWGraph obtains these from [US Census Bureau](https://www.census.gov/cgi-bin/geo/shapefiles/index.php)).
@@ -35,6 +35,10 @@ SAWGraph obtains these from [US Census Bureau](https://www.census.gov/cgi-bin/ge
 * S2 integration is performed with the assistance of scripts from KnowWhereGraph
 
 County subdivisions (cousub) are easy to link to Data Commons by their 10-digit FIPS code (GEOID).
+
+**Script**: *AdminRegionsLevel3-2ttl.py*
+* Creates a .ttl file for all county subdivisions in a given state from data in a TIGER shapefile from the US Census Bureau.
+* See the table below for additional detail.
 
 | cousub attribute | Description | Lift to graph | Ontology property | Notes |
 | --- | --- | --- | --- | --- |
@@ -55,11 +59,6 @@ County subdivisions (cousub) are easy to link to Data Commons by their 10-digit 
 | INTPTLAT | Internal point latitude | No |  |  |
 | INTPTLON | Internal point longitude | No |  |  |
 | geometry | Polygon | Yes | geo:hasGeometry/geo:asWKT |  |
-
-Currently, the graph includes county subdivisions from Maine, Illinois, Ohio, and Kansas.
-
-## S2 Cells
-S2 cells are available to SAWGraph via the KnowWhereGraph project. Level 13 are currently in use. The cells, their integration with Level 1 and Level 2 administrative regions, and a smaller "class statement only" version are all processed via the S2 script included here, which supercedes the scripts found in the [s2cells](/datasets/s2cells) folder.
 
 ## Additional Administrative Region Information
 For the state of Maine (ME) town and parcel data can be downloaded from the Maine State GeoLibrary Data Catalog
