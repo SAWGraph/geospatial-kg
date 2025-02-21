@@ -3,7 +3,7 @@
 # 
 # Run this from the Spatial repository
 # Retrieves all Illinois counties and their associated S2 cells
-#    NOTE: This returns about 20,000 results
+#    NOTE: This returns about 40,000 results
 
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
