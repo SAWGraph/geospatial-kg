@@ -1,7 +1,7 @@
-# S2L13_AdminRegions basics
+# Spatial basics
 # Retrieve all Illinois counties and their associated S2 cells
 # 
-# Run this from the S2L13_AdminRegions repository
+# Run this from the Spatial repository
 # Retrieves all Illinois counties and their associated S2 cells
 #    NOTE: This returns about 20,000 results
 
