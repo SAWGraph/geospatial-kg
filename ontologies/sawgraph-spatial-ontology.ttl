@@ -11,15 +11,16 @@
 @prefix spatial: <http://purl.org/spatialai/spatial/spatial-full#> .
 
 <http://purl.org/spatialai/spatial/spatial-full> rdf:type owl:Ontology ;
-                                                                      terms:contributor "Shirly Stephen"@en, "Torsten Hahmann"@en ;
-                                                                      terms:created "2024-06-20" ;
-                                                                      terms:modified "2024-12-10" ;
-                                                                      terms:publisher "SAWGraph Project Team"@en ;
-                                                                      terms:creator "Torsten Hahmann, SAWGraph Project"@en ;
-                                                                      terms:description "This ontology supports querying the SAWGraph Knowledge Graph and the KnowWhereGraph. It is an adaptation of the spatial ontology originally published by the KnowWhereGraph Project"@en ;
-																	  dc:source "KWG Project: http://stko-kwg.geog.ucsb.edu/lod/ontology/" ;
-                                                                      terms:title "SAWGraph's spatial ontology - an extension of KnowWhereGraph's spatial ontology"@en ;
-                                                                      owl:versionInfo "4.0"@en .
+                                                 terms:contributor <https://orcid.org/0000-0003-3547-8058> , # Shirly Stephen
+                                                                   <https://orcid.org/0000-0002-5331-5052> ; # Torsten Hahmann
+                                                 terms:created "2024-06-20"^^xsd:date ;
+                                                 terms:modified "2024-12-10"^^xsd:date ;
+                                                 terms:publisher "https://sawgraph.github.io/"^^xsd:anyURI ; #SAWGraph Project Team
+                                                 terms:creator <https://orcid.org/0000-0002-5331-5052> ; # Torsten Hahmann
+                                                 terms:description "This ontology supports querying the SAWGraph Knowledge Graph and the KnowWhereGraph. It is an adaptation of the spatial ontology originally published by the KnowWhereGraph Project"@en ;
+						 dc:source "KWG Project: http://stko-kwg.geog.ucsb.edu/lod/ontology/" ;
+                                                 terms:title "SAWGraph's spatial ontology - an extension of KnowWhereGraph's spatial ontology"@en ;
+                                                 owl:versionInfo "4.0"@en .
 
 #################################################################
 #    Annotation properties
