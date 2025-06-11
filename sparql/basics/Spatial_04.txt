@@ -1,8 +1,10 @@
 # Spatial basics
 # Retrieve all county subdivisions for the state of Maine
+# A GraphDB version is first and a FRINK version follows
 # 
 # Retrieves all Maine county subdivisions
 
+### GraphDB Version ###
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -14,4 +16,16 @@ SELECT * WHERE {
        	   rdfs:label ?name ;
            kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.23 .
     }
+} ORDER BY ?name
+
+### FRINK Version ###
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT * WHERE {
+    ?s rdf:type kwg-ont:AdministrativeRegion_3 ;
+       rdfs:label ?name ;
+       kwg-ont:administrativePartOf/kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.23 .
 } ORDER BY ?name
