@@ -1,22 +1,51 @@
 # Spatial basics
 # Retrieve all Illinois counties and their associated S2 cells
+# A GraphDB version is first and a FRINK version follows
 # 
-# Run this from the Spatial repository
 # Retrieves all Illinois counties and their associated S2 cells
-#    NOTE: This returns about 40,000 results
+#    NOTE: This returns about 170,000 results on GraphDB
+#          It does not complete on FRINK before throwing an error
 
+### GraphDB Version ###
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT * WHERE {
-    # Find counties and their names
-    # Restrict them to Illinois
-    # Retrieve their associated S2 cells
-   	?county rdf:type kwg-ont:AdministrativeRegion_2 ;
-    		rdfs:label ?county_label ;
-    		kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.17 ;
-    		kwg-ont:sfOverlaps | kwg-ont:sfWithin ?s2_cell .
-    ?s2_cell rdf:type kwg-ont:S2Cell_Level13 .
+    SERVICE <repository:Spatial> {
+        SELECT * WHERE {
+            # Find counties and their names
+    		# Restrict them to Illinois
+    		# Retrieve their associated S2 cells
+   			?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+    				rdfs:label ?county_label ;
+    				kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.17 ;
+    				spatial:connectedTo ?s2_cell .
+    		?s2_cell rdf:type kwg-ont:S2Cell_Level13 .
+            # Keep only the KWG administrative regions and ignore the dcgeoid duplicates
+            FILTER regex(str(?county), "admin")
+        }
+    }
+} ORDER BY ?county_label ?s2_cell
+
+### FRINK Version ###
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+  # Find counties and their names
+  # Restrict them to Illinois
+  # Retrieve their associated S2 cells
+  ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+          rdfs:label ?county_label ;
+          kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.17 ;
+          spatial:connectedTo ?s2_cell .
+  ?s2_cell rdf:type kwg-ont:S2Cell_Level13 .
+  # Keep only the KWG administrative regions and ignore the dcgeoid duplicates
+#  FILTER regex(str(?county), "admin")
 } ORDER BY ?county_label ?s2_cell
