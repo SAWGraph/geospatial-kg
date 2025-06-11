@@ -1,7 +1,6 @@
 # Spatial basics
 # Retrieve all county subdivisions for the state of Maine
 # 
-# Run this from the Spatial repository
 # Retrieves all Maine county subdivisions
 
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
@@ -10,7 +9,9 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT * WHERE {
-    ?s rdf:type kwg-ont:AdministrativeRegion_3 ;
-       rdfs:label ?name ;
-       kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.23 .
+    SERVICE <repository:Spatial> {
+        ?s rdf:type kwg-ont:AdministrativeRegion_3 ;
+       	   rdfs:label ?name ;
+           kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.23 .
+    }
 } ORDER BY ?name
