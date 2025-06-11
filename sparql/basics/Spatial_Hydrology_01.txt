@@ -10,16 +10,17 @@ PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX spatial: <http://purl.org/spatialai/spatial/spatial-full#>
 
-SELECT ?cousub_label (COUNT(DISTINCT ?aq) AS ?num_aq) WHERE {
+SELECT ?cousub_name (COUNT(DISTINCT ?aq) AS ?num_aq) WHERE {
     SERVICE <repository:Spatial> {
         SELECT * WHERE {
             # Find county subdivisions from Maine and their labels
             ?cousub rdf:type kwg-ont:AdministrativeRegion_3 ;
             		kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.23 ;
-            		rdfs:label ?cousub_label .
+            		rdfs:label ?cousub_name .
             # Find S2 cells that intersect the county subdivisions
-            ?s2 kwg-ont:sfOverlaps | kwg-ont:sfWithin ?cousub ;
+            ?s2 spatial:connectedTo ?cousub ;
             	rdf:type kwg-ont:S2Cell_Level13	.
         }
     }
@@ -28,7 +29,7 @@ SELECT ?cousub_label (COUNT(DISTINCT ?aq) AS ?num_aq) WHERE {
         SELECT * WHERE {
             # Find aquifers that intersect the county subdivision S2 cells
             ?aq rdf:type gwml2:GW_Aquifer .
-    		?s2 kwg-ont:sfOverlaps | kwg-ont:sfWithin ?aq .
+    		?s2 spatial:connectedTo ?aq .
         }
     }
-} GROUP BY ?cousub_label ORDER BY ?cousub_label
+} GROUP BY ?cousub_name ORDER BY ?cousub_name
