@@ -1,1 +1,16 @@
-# Administrative Regions and S2 Cells
+# folders
+datasets/.ipynb_checkpoints/
+datasets/__pycache__/
+datasets/logs/
+datasets/OLD/
+datasets/ttl_files/
+
+# files
+datasets/*.ipynb
+datasets/AdminRegion_Examples.txt
+datasets/Cranberry_Isles_example.png
+datasets/*.tsv
+datasets/*.qgz
+datasets/remove_sfWithin_level-2.py
+datasets/st23_me_cousub2020.txt
+datasets/us_output.ttl
