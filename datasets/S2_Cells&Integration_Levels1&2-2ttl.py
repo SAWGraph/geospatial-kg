@@ -50,7 +50,7 @@ from namespaces import _PREFIX
 os.chdir('G:/My Drive/Laptop/SAWGraph/Data Sources/Spatial')
 
 ### STATE OF INTEREST #########
-state_name = 'Washington'
+state_name = 'Texas'
 ### State-County-FIPS Table ###
 scf_table = 'fips2county.tsv'
 ###############################
