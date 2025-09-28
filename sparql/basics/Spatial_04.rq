@@ -29,3 +29,18 @@ SELECT DISTINCT * WHERE {
        rdfs:label ?name ;
        kwg-ont:administrativePartOf/kwg-ont:administrativePartOf kwgr:administrativeRegion.USA.23 .
 } ORDER BY ?name
+
+
+## Another FRINK Version (slower, but avoids duplicates) ###
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+
+# Retrieve all county subdivisions of Ohio.
+
+SELECT * WHERE {
+    ?region a kwg-ont:AdministrativeRegion_3;   # by county subdivision (Admin Level 3) 
+       rdfs:label ?name .
+  	# part that should be run from spatial 
+	?region kwg-ont:administrativePartOf+ kwgr:administrativeRegion.USA.39; 
+} ORDER BY ?name
