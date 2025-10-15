@@ -47,5 +47,5 @@ SELECT * WHERE {
           spatial:connectedTo ?s2_cell .
   ?s2_cell rdf:type kwg-ont:S2Cell_Level13 .
   # Keep only the KWG administrative regions and ignore the dcgeoid duplicates
-#  FILTER regex(str(?county), "admin")
+  FILTER regex(str(?county), "admin")
 } ORDER BY ?county_label ?s2_cell
