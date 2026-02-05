@@ -203,8 +203,8 @@ geo:Feature rdf:type owl:Class ;
             rdfs:label "Feature" .
 
 
-###  http://www.opengis.net/ont/geosparql#Geoometry
-geo:Geoometry rdf:type owl:Class ;
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry rdf:type owl:Class ;
               rdfs:subClassOf geo:SpatialObject ;
               rdfs:comment "Source - GeoSPARQL" ;
               rdfs:label "Geometry" .
