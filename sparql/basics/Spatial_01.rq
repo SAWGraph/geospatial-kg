@@ -3,8 +3,7 @@
 # A GraphDB version is first and a FRINK version follows
 # 
 # Retrieves all Illinois counties and their associated S2 cells
-#    NOTE: This returns about 170,000 results on GraphDB
-#          It does not complete on FRINK before throwing an error
+#    NOTE: This returns about 170,000 results
 
 ### GraphDB Version ###
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
