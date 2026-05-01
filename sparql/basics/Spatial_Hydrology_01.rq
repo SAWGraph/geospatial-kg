@@ -55,4 +55,4 @@ SELECT ?cousub_name (COUNT(DISTINCT ?aq) AS ?num_aq) WHERE {
   # Find aquifers that intersect the county subdivision S2 cells
   ?aq rdf:type gwml2:GW_Aquifer .
   ?s2 spatial:connectedTo ?aq .
-} GROUP BY ?cousub_name ORDER BY ?cousub_name
+} GROUP BY ?cousub_name ORDER BY DESC(?num_aq)
