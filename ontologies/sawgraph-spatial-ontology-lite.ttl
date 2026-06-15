@@ -225,7 +225,8 @@ kwg-ont:AdministrativeRegion_3 rdf:type owl:Class ;
 
 ###  http://stko-kwg.geog.ucsb.edu/lod/ontology/S2Cell
 kwg-ont:S2Cell rdf:type owl:Class ;
-               rdfs:subClassOf kwg-ont:Cell ;
+               rdfs:subClassOf #kwg-ont:Cell ,
+                               geo:Feature ;
                owl:disjointWith kwg-ont:AdministrativeRegion ;
                rdfs:isDefinedBy <http://purl.org/spatialai/spatial/spatial-full> .
 
