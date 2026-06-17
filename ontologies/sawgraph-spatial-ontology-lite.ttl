@@ -292,3 +292,4 @@ geo:SpatialObject rdf:type owl:Class ;
                   rdfs:comment "Source: GeoSPARQL" ;
                   rdfs:label "Spatial Object" ;
                   rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> .
+ 
