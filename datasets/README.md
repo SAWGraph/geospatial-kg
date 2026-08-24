@@ -14,7 +14,7 @@ Administrative regions are classified according to GADM. SAWGraph uses the first
 * Creates a .ttl file containing only class assignments (*?x* rdf:type kwg-ont:AdministrativeRegion_*#*) from the above files. This can be imported into any SAWGraph repository so federation to the Spatial repository is not required to enforce instances being a specific administrative region level.
 
 ### Administrative Regions: Level 1 (KnowWhereGraph)
-SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) along with their S2 integration.
+SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/) along with their S2 integration.
 
 **Script**: *AdminRegionsLevel1&2-2ttl.py*
 * Creates us_admin-regions_level-1.ttl file with US state information queried from [KnowWhereGraph](https://stko-kwg.geog.ucsb.edu/graphdb/sparql).
@@ -22,12 +22,12 @@ SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) a
 * Adds an `owl:sameAs` relation to a `dcgeoid` identifier for linking to Data Commons.
 
 ### Administrative Regions: Level 2 (KnowWhereGraph)
-SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/)) along with their S2 integration.
+SAWGraph obtains these from [KnowWhereGraph](https://www.knowwheregraph.org/) along with their S2 integration.
 
 **Script**: See *AdminRegionsLevel1&2-2ttl.py* above.
 
 ### Administrative Regions: Level 3 (US Census Bureau County Subdivisions)
-SAWGraph obtains these from [US Census Bureau](https://www.census.gov/cgi-bin/geo/shapefiles/index.php)).
+SAWGraph obtains these from [US Census Bureau](https://www.census.gov/cgi-bin/geo/shapefiles/index.php).
 * County subdivisions are often townships but can also correspond to towns, especially in New England.
 * This is as deep as the US Census Bureau goes with municipal subdivisions.
 * Actual towns and cities tend to be noncontiguous leaving a patchwork of gaps.
