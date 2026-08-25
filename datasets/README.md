@@ -1,3 +1,5 @@
+Ontologies and datasets (triples) produced for this repository are licensed as [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
 ## S2 Cells
 S2 cells are available to SAWGraph via the KnowWhereGraph project. Level 13 are currently in use. The cells, their integration with Level 1 and Level 2 administrative regions, and a smaller "class statement only" version are all processed via the S2 script included here, which supercedes the scripts found in the [s2cells](/datasets/s2cells) folder.
 
