@@ -24,3 +24,22 @@ SAWGraph integrates all features with a geometric representation to two datasets
 All of the files and directories above should be copied to some working directory.
 Additionally ...
 
+### Examples
+
+`python3 integrate_s2_ar3.py --states "CO NM TX" --path input --dim 2 --name hydrofabric_catchment_huc13`
+- `--states`: HUC 13 covers portions of 3 states (always put multiple states in quotes separated by spaces)
+- `--path`: the input .ttl file is in the `input` directory within the working directory
+- `--dim`: the geometries are polygons (2 dimensional)
+- `--name`: the output files (placed in the `output` directory within the working directory) will have `s2_` or `ar3_` prefixed and .ttl appended to them
+- 
+`python3 integrate_s2_ar3.py --states "CO NM TX" --path input --dim 1 --name us_nhd_flowline_huc13`
+- `--states`: HUC 13 covers portions of 3 states (always put multiple states in quotes separated by spaces)
+- `--path`: the input .ttl file is in the `input` directory within the working directory
+- `--dim`: the geometries are lines (1 dimensional)
+- `--name`: the output files (placed in the `output` directory within the working directory) will have `s2_` or `ar3_` prefixed and .ttl appended to them
+- 
+`python3 integrate_s2_ar3.py --states CO --path input --dim 0 --name co-dwr_wells_from-api`
+- `--states`: these are Colorado water wells (quotes are not needed for a single state)
+- `--path`: the input .ttl file is in the `input` directory within the working directory
+- `--dim`: the geometries are points (0 dimensional)
+- `--name`: the output files (placed in the `output` directory within the working directory) will have `s2_` or `ar3_` prefixed and .ttl appended to them
