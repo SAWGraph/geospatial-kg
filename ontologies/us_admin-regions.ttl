@@ -4,7 +4,6 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix saw_ar: <http://sawgraph.spatialai.org/v1/sawgraph/admin-regions#> .
 @prefix spatial: <http://purl.org/spatialai/spatial/spatial-full#> .
 @prefix stad: <http://purl.org/spatialai/stad/v2/core#> .
 @prefix time: <http://www.w3.org/2006/time#> .

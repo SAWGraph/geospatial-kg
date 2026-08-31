@@ -5,16 +5,15 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix spatial: <http://purl.org/spatialai/spatial/spatial-full#> .
-@prefix saw_s2: <http://sawgraph.spatialai.org/v1/sawgraph/s2cells#> .
 @prefix stad: <http://purl.org/spatialai/stad/v2/core#> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://sawgraph.spatialai.org/v1/sawgraph/s2cells> rdf:type owl:Ontology ;
-                                                    dcterms:issued "2025-02-19"^^xsd:date ;
-												    dcterms:modified "2025-02-19"^^xsd:date ;
-												    prov:wasDerivedFrom saw_s2:sourceDataset ;
-												    owl:versionInfo "0.1"^^xsd:string .
+<http://purl.org/spatialai/spatial/s2cells> rdf:type owl:Ontology ;
+                                            dcterms:issued "2025-02-19"^^xsd:date ;
+											dcterms:modified "2025-02-19"^^xsd:date ;
+											prov:wasDerivedFrom saw_s2:sourceDataset ;
+											owl:versionInfo "0.1"^^xsd:string .
 
 saw_s2:sourceDataset rdf:type stad:Dataset ;
                         rdfs:label "S2 Geometry" ;
