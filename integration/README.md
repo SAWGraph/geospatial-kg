@@ -12,7 +12,7 @@ Choose or create a folder/directory for your workspace. Within that workspace yo
 **Folders**
 - `input`: as currently implemented, this is a place to put a single turtle file for integration with both S2 and AR3
 - `output`: each execution of SAWGraph's tool creates two turtle files, one for S2 integration and one for AR3 integration, and they are written here
-- `s2-coverings`: contains SAWGraph's modifications to the [s2-coverings tool from KnowWhereGraph](https://github.com/SAWGraph/s2-coverings) which includes two tools, one to create S2 cells (not used as part of the integration process) and one to integrate an input turtle file with S2 cells. There are two branches, `integration-c101` created for a Rocky Linux server using Apptainer and `integration-win` created for Windows using Docker.
+- `s2-coverings`: contains [SAWGraph's modifications to the s2-coverings tool from KnowWhereGraph](https://github.com/SAWGraph/s2-coverings) which includes two tools, one to create S2 cells (not used as part of the integration process) and one to integrate an input turtle file with S2 cells. There are two branches, `integration-c101` created for a Rocky Linux server using Apptainer and `integration-win` created for Windows using Docker.
 - `support`: contains a .tsv file that is a crosswalk between states, state names, state abbreviations, county names, and FIPS codes
 - `us_ar3`: contains turtle files of level 3 administrative regions on a state-by-state basis (see `Other Files at Zenodo` below)
 - `us_s2`: contains turtle files of level 13 S2 cells on a state-by-state basis (see `Other Files at Zenodo` below)
