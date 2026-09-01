@@ -12,15 +12,18 @@ Choose or create a folder/directory for your workspace. Within that workspace yo
 **Folders**
 - `input`: as currently implemented, this is a place to put a single turtle file for integration with both S2 and AR3
 - `output`: each execution of SAWGraph's tool creates two turtle files, one for S2 integration and one for AR3 integration, and they are written here
-- `s2-coverings`: contains SAWGraph's modifications to the [s2-coverings tool from KnowWhereGraph](https://github.com/KnowWhereGraph/s2-coverings) which includes two tools, one to create S2 cells (not used as part of the integration process) and one to integrate an input turtle file with S2 cells
+- `s2-coverings`: contains SAWGraph's modifications to the [s2-coverings tool from KnowWhereGraph](https://github.com/SAWGraph/s2-coverings) which includes two tools, one to create S2 cells (not used as part of the integration process) and one to integrate an input turtle file with S2 cells. There are two branches, `integration-c101` created for a Rocky Linux server using Apptainer and `integration-win` created for Windows using Docker.
 - `support`: contains a .tsv file that is a crosswalk between states, state names, state abbreviations, county names, and FIPS codes
 - `us_ar3`: contains turtle files of level 3 administrative regions on a state-by-state basis (see `Other Files` below)
 - `us_s2`: contains turtle files of level 13 S2 cells on a state-by-state basis (see `Other Files` below)
 
 **Other Files in this Github Folder**
 - `KWG Tools.zip`: contains the original tool from KnowWhereGraph to cross-integrate any two turtle files that include features with geometries, as long as each includes geometries of a consistent dimension
+
+**Other Files at Zenodo**
 - `us_ar3.zip`: the contents of this zip file should be placed within the `us_ar3` folder in the workspace, including the `current_ar3` subfolder
 - `us_s2.zip`: the contents of this zip file should be placed within the `us_s2` folder in the workspace
+- `s2-coverings-main.sif`: this file should be placed in the `s2-coverings/src` folder when used on a system using Apptainer instead of Docker
 
 **Workspace Structure**
 
@@ -53,7 +56,7 @@ From a command line within the working directory, the script is called with four
 - `--dim`: the dimension of the input geometries (0 for points, 1 for lines, and 2 for polygons)
 - `--name`: the output files will have `s2_` or `ar3_` prepended and .ttl appended to this
 
-Examples of each dimension are provided with additional notes.
+Examples of each dimension are provided with additional notes. Docker needs to be running before executing the script.
 
 ### Examples
 `python3 integrate_s2_ar3.py --states "CO NM TX" --path input --dim 2 --name hydrofabric_catchment_huc13`
