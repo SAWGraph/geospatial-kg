@@ -1,3 +1,7 @@
+# Use caution running this for S2 cells on a personal PC
+#   Processing the S2 cells used over 150GB RAM on SKAILab's c101 server at UMaine and took over an hour to run
+#   Wrote 7.4M new triples (750MB)
+
 from rdflib import Graph, Namespace, RDF, RDFS, URIRef, Literal
 from pathlib import Path
 import zipfile
@@ -32,7 +36,7 @@ logger.info('LOGGER INITIALIZED')
 
 
 def initial_kg(_PREFIX: dict):
-    logger.info('Initialize RDFLib Graph')
+    logger.info('  Initialize RDFLib Graph')
     graph = Graph()
     for prefix in _PREFIX:
         graph.bind(prefix, _PREFIX[prefix])
@@ -42,8 +46,10 @@ def initial_kg(_PREFIX: dict):
 def create_prov_file(input_path: Path, _PREFIX: dict) -> None:
     kg_in = initial_kg(_PREFIX)
     if input_path.suffix == '.ttl':
+        logger.info(f'  Reading .ttl file')
         kg_in.parse(input_path, format='turtle')
     else:
+        logger.info('  Reading .zip file')
         with zipfile.ZipFile(input_path, 'r') as archive:
             for file_info in archive.infolist():
                 if file_info.filename.endswith('.ttl'):
@@ -71,12 +77,15 @@ def create_prov_file(input_path: Path, _PREFIX: dict) -> None:
         kg_out.add((entity, NEW_PREDICATE, NEW_OBJECT))
         count += 1
 
-    print(f'Successfully added new triples to {count} entities from {input_path.stem}{input_path.suffix}')
+    logger.info(f'  Successfully added new triples to {count} entities from {input_path.stem}{input_path.suffix}')
 
     output_path = ttl_dir / f'{input_path.stem}_prov.ttl'
+    logger.info(f'  Writing to {output_path}')
     kg_out.serialize(destination=output_path, format="turtle")
+    logger.info(f'  Successfully written to {output_path}')
 
 
 if __name__ == "__main__":
     for file in in_files:
+        logger.info(f'Processing {file}')
         create_prov_file(file, _PREFIX)
