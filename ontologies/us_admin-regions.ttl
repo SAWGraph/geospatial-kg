@@ -4,7 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix spatial: <http://purl.org/spatialai/spatial/spatial-full#> .
+@prefix ar: <http://purl.org/spatialai/spatial/admin-regions#> .
 @prefix stad: <http://purl.org/spatialai/stad/v2/core#> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,21 +12,21 @@
 <http://purl.org/spatialai/spatial/admin-regions> rdf:type owl:Ontology ;
                                                   dcterms:issued "2025-02-19"^^xsd:date ;
 												  dcterms:modified "2025-02-19"^^xsd:date ;
-												  prov:wasDerivedFrom saw_ar:sourceDataset_01 ;
-												  prov:wasDerivedFrom saw_ar:sourceDataset_02 ;
+												  prov:wasDerivedFrom ar:sourceDataset_01 ;
+												  prov:wasDerivedFrom ar:sourceDataset_02 ;
 												  owl:versionInfo "0.1"^^xsd:string .
 
-saw_ar:sourceDataset_01 rdf:type stad:Dataset ;
-                        rdfs:label "GADM data (version 4.1) - United States" ;
-						dcterms:issued "2022-07-16"^^xsd:date ;
-						dcterms:source <https://gadm.org/download_country.html> ;
-						rdfs:comment "This dataset covers levels 0, 1 and 2 (country, states, and counties)" ;
-						rdfs:comment "SAWGraph includes the level 1 and 2 data, which were queried from the KnowWhereGraph" ;
-						stad:hasSpatialCoverage kwgr:administrativeRegion.USA .
+ar:sourceDataset_01 rdf:type stad:Dataset ;
+                    rdfs:label "GADM data (version 4.1) - United States" ;
+					dcterms:issued "2022-07-16"^^xsd:date ;
+					dcterms:source <https://gadm.org/download_country.html> ;
+					rdfs:comment "This dataset covers levels 0, 1 and 2 (country, states, and counties)" ;
+					rdfs:comment "SAWGraph includes the level 1 and 2 data, which were queried from the KnowWhereGraph" ;
+					stad:hasSpatialCoverage kwgr:administrativeRegion.USA .
 
-saw_ar:sourceDataset_02 rdf:type stad:Dataset ;
-                        rdfs:label "2023 TIGER/Line® Shapefiles: County Subdivisions" ;
-						rdfs:comment "County subdivisions correspond with GADM administrative region level 3" ;
-						dcterms:issued "2023-11-22"^^xsd:date ;
-						dcterms:source <https://www.census.gov/cgi-bin/geo/shapefiles/index.php> ;
-						stad:hasSpatialCoverage kwgr:administrativeRegion.USA .
+ar:sourceDataset_02 rdf:type stad:Dataset ;
+                    rdfs:label "2023 TIGER/Line® Shapefiles: County Subdivisions" ;
+					rdfs:comment "County subdivisions correspond with GADM administrative region level 3" ;
+					dcterms:issued "2023-11-22"^^xsd:date ;
+					dcterms:source <https://www.census.gov/cgi-bin/geo/shapefiles/index.php> ;
+					stad:hasSpatialCoverage kwgr:administrativeRegion.USA .
